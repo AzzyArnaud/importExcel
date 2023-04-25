@@ -54,13 +54,13 @@
           $data['DATE_DEBUTS']= $this->input->post('DATE_DEBUT');
           $data['DATE_FINS']= $this->input->post('DATE_FIN');
           $data['conddateun'] = ' AND DATE_TIME_VENTE BETWEEN "'.$DATE_DEBUT.'" AND "'.$DATE_FIN.'"';
-          $data['conddatedeux'] = ' AND DATE_TIME BETWEEN "'.$DATE_DEBUT.'" AND "'.$DATE_FIN.'"';
+          $data['conddatedeux'] = ' AND `req_stock_endomage`.DATE_TIME BETWEEN "'.$DATE_DEBUT.'" AND "'.$DATE_FIN.'"';
         }
         else{
           $data['DATE_DEBUTS']= $this->input->post('DATE_DEBUT');
           $data['DATE_FINS']= date("Y-m-d");
           $data['conddateun'] = ' AND DATE_TIME_VENTE BETWEEN "'.$DATE_DEBUT.'" AND "'.date("Y-m-d").'"';
-          $data['conddatedeux'] = ' AND DATE_TIME BETWEEN "'.$DATE_DEBUT.'" AND "'.date("Y-m-d").'"';
+          $data['conddatedeux'] = ' AND `req_stock_endomage`.DATE_TIME BETWEEN "'.$DATE_DEBUT.'" AND "'.date("Y-m-d").'"';
         }
 
         
@@ -69,7 +69,7 @@
           $data['DATE_DEBUTS']= date("Y-m-d");
           $data['DATE_FINS']= date("Y-m-d");
           $data['conddateun'] = ' AND DATE_TIME_VENTE BETWEEN "'.date("Y-m-d").'" AND "'.date("Y-m-d").'"';
-          $data['conddatedeux'] = ' AND DATE_TIME BETWEEN "'.date("Y-m-d").'" AND "'.date("Y-m-d").'"';
+          $data['conddatedeux'] = ' AND `req_stock_endomage`.DATE_TIME BETWEEN "'.date("Y-m-d").'" AND "'.date("Y-m-d").'"';
       }
 
       $MODE = $this->input->post('MODE');

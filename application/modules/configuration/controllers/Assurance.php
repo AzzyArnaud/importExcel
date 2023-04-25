@@ -53,13 +53,24 @@ class Assurance extends CI_Controller {
                        'ADRESSE_ASSURANCE'=>$ADRESSE_ASS,
                        'ID_SOCIETE'=>$ID_SOCIETE,
                       );
-                      
-    $this->Model->insert_last_id('saisie_assurance',$datasuser);  
+    $dcheck=$this->Model->getRequete("SELECT * FROM saisie_assurance where NOM_ASSURANCE='".$NOM_ASS."'"); 
+
+   
+
+    if(empty($dcheck)) {
+      $this->Model->insert_last_id('saisie_assurance',$datasuser);  
 
     $message = "<div class='alert alert-success' id='message'>
-                            Utilisateur enregistr&eacute; avec succés
+                            Assurance enregistr&eacute; avec succés
                             <button type='button' class='close' data-dismiss='alert'>&times;</button>
                       </div>";
+                    } else {
+                      $message = "<div class='alert alert-danger' id='message'>
+                            Echec! cette Assurance existe deja
+                            <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                      </div>";
+                    }               
+    
     $this->session->set_flashdata(array('message'=>$message));
       redirect(base_url('configuration/Assurance'));  
    }
@@ -82,21 +93,23 @@ class Assurance extends CI_Controller {
    {
    $ID_ASSURANCE=$this->input->post('ID_ASSURANCE');
    $NOM_ASSURANCE=$this->input->post('NOM_ASSURANCE');
+   $NOM_ASSURANCE_old=$this->input->post('NOM_ASSURANCE_old');
    $NIF_ASSURANCE=$this->input->post('NIF_ASSURANCE');
    $RC_ASSURANCE=$this->input->post('RC_ASSURANCE');
    $TEL_ASSURANCE=$this->input->post('TEL_ASSURANCE');
    $EMAIL_ASSURANCE=$this->input->post('EMAIL_ASSURANCE');
    $ADRESSE_ASSURANCE=$this->input->post('ADRESSE_ASSURANCE');
+   $ID_SOCIETE=$this->session->userdata('STRAPH_ID_SOCIETE');
    // $this->Model->update("saisie_assurance",array("ID_ASSURANCE"=>$ID_ASS),array("NOM_ASSURANCE"=>$NOM_ASS, "NIF_ASSURANCE"=>$NIF_ASS, "RC_ASSURANCE"=>$RC_ASS, "TEL_ASSURANCE"=>$TEL_ASS, "EMAIL_ASSURANCE"=>$EMAIL_ASS, "ADRESSE_ASSURANCE"=>$ADRESSE_ASS, "ID_SOCIETE"=>$ID_SOCIETE));
    //  redirect(base_url('configuration/Assurance'));  
 
 
 $this->form_validation->set_rules('NOM_ASSURANCE', 'NOM_ASSURANCE', 'required');
-$this->form_validation->set_rules('NIF_ASSURANCE', 'NIF_ASSURANCE', 'required');
-$this->form_validation->set_rules('RC_ASSURANCE', 'RC_ASSURANCE', 'required');
-$this->form_validation->set_rules('TEL_ASSURANCE', 'TEL_ASSURANCE', 'required');
-$this->form_validation->set_rules('EMAIL_ASSURANCE', 'EMAIL_ASSURANCE', 'required');
-$this->form_validation->set_rules('ADRESSE_ASSURANCE', 'ADRESSE_ASSURANCE', 'required');
+// $this->form_validation->set_rules('NIF_ASSURANCE', 'NIF_ASSURANCE', 'required');
+// $this->form_validation->set_rules('RC_ASSURANCE', 'RC_ASSURANCE', 'required');
+// $this->form_validation->set_rules('TEL_ASSURANCE', 'TEL_ASSURANCE', 'required');
+// $this->form_validation->set_rules('EMAIL_ASSURANCE', 'EMAIL_ASSURANCE', 'required');
+// $this->form_validation->set_rules('ADRESSE_ASSURANCE', 'ADRESSE_ASSURANCE', 'required');
     
        if ($this->form_validation->run() == FALSE){
         $message = "<div class='alert alert-danger'>
@@ -120,13 +133,22 @@ $this->form_validation->set_rules('ADRESSE_ASSURANCE', 'ADRESSE_ASSURANCE', 'req
                            'ADRESSE_ASSURANCE'=>$ADRESSE_ASSURANCE,
                            'ID_SOCIETE'=>$ID_SOCIETE,"ENVOIE"=>0
                           );
-                          
+        $dcheck=$this->Model->getRequete("SELECT * FROM saisie_assurance where NOM_ASSURANCE='".$NOM_ASSURANCE."'"); 
+
+    if(empty($dcheck)||$NOM_ASSURANCE==$NOM_ASSURANCE_old) {  
+              
         $this->Model->update('saisie_assurance',array('ID_ASSURANCE'=>$ID_ASSURANCE),$datasuser);  
     
         $message = "<div class='alert alert-success' id='message'>
-                                Utilisateur modifi&eacute; avec succés
+                                Enregistrement avec succés
                                 <button type='button' class='close' data-dismiss='alert'>&times;</button>
                           </div>";
+          }else {
+                      $message = "<div class='alert alert-danger' id='message'>
+                            Echec! cette Assurance existe deja
+                            <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                      </div>";
+                    } 
         $this->session->set_flashdata(array('message'=>$message));
           redirect(base_url('configuration/Assurance'));  
        }

@@ -360,9 +360,9 @@ $ass="<option value=''> </option>";
                   <select class="form-control select select2-success" data-dropdown-css-class="select2-success" name="ID_CLIENT" id="ID_CLIENT" style="width: 100%;">
                     <option value=""></option>
                     <?php 
-                    $cl='<option value=""></option>';
+                    $cl="<option value=''></option>";
                     foreach ($client as $key) {
-                       $cl.="<option value=".$key['ID_CLIENT'].">".$key['NOM_CLIENT']." ".$key['PRENOM_CLIENT']."(".$key['TEL_CLIENT'].")</option>";
+                       $cl.="<option value='".$key['ID_CLIENT']."'>".$key['NOM_CLIENT']." ".$key['PRENOM_CLIENT']."(".$key['TEL_CLIENT'].")</option>";
                       echo "<option value=".$key['ID_CLIENT'].">".$key['NOM_CLIENT']." ".$key['PRENOM_CLIENT']."(".$key['TEL_CLIENT'].")</option>";
                      
                     }
@@ -681,12 +681,19 @@ alert();
                                                                        
                   success:function(data)
                                       {  
-                                         // alert(data); 
+                                         // alert(data);
+
+                                         var inform= data.split("|");
 
                                           $('#infos').html(''); 
-                                          $('#infos').html(data); 
+                                          $('#infos').html(inform[0]); 
 
-                                      printDiv();                                                  
+                                      if(inform[1]==0){
+                                        printDiv();  
+                                      }else{
+                                        alert("ECHEC D'IMPRESSION FACTURE")
+                                      }
+                                                                                      
                                        }
                 });
         });
@@ -702,13 +709,20 @@ alert();
                   data: {id:id},
                                                                        
                   success:function(data)
-                                      {  
-                                         // alert(data); 
+                                       {  
+                                         // alert(data);
+
+                                         var inform= data.split("|");
 
                                           $('#infos').html(''); 
-                                          $('#infos').html(data); 
+                                          $('#infos').html(inform[0]); 
 
-                                      printDiv();                                                  
+                                      if(inform[1]==0){
+                                        printDiv();  
+                                      }else{
+                                        alert("ECHEC D'IMPRESSION FACTURE")
+                                      }
+                                                                                      
                                        }
                 });
  }
@@ -788,7 +802,7 @@ alert();
                                                       // $("#LivRadio1").val(0);
                                                       // $("#ID_ASSURANCE").html('<?=$ass?>');
                                                       $("#ID_ASSURANCE").html("<?=$ass?>");
-                                                      $("#ID_CLIENT").html('<?=$cl?>');
+                                                      $("#ID_CLIENT").html("<?=$cl?>");
                                                       $("#ID_TYPE_REMISE_ASS").val("");
                                                       $("#ID_TYPE_REMISE_CLIENT").val("");
                                                       $("#MONTANT_TOTAL").val(0);
@@ -872,8 +886,9 @@ var BARCODE=$("#BARCODE").val();
                                                       $("#MONTANT_PAYE").val(resp[2]);
                                                       $("#MONTANT_TOTAL").val(resp[2]);
                                                       $("#ID_TYPE_REMISE_CLIENT").val("");
-                                                      // $("#ID_CLIENT").html('<?=$cl?>');
-                                                      $("#ID_CLIENT").html('<?=$cl?>');
+                                                      $("#ID_CLIENT").html("<?=$cl?>");
+                                                      //
+                                                     // $("#ID_CLIENT").html("<?=$cl?>");
                                                       
                                                       
                                                       $("#ID_TYPE_REMISE_ASS").val("");
@@ -953,7 +968,7 @@ if(QUANTITE){
                                                       $("#MONTANT_PAYE").val(resp[2]);
                                                       $("#MONTANT_TOTAL").val(resp[2]);
                                                       $("#ID_TYPE_REMISE_CLIENT").val("");
-                                                      $("#ID_CLIENT").html('<?=$cl?>');
+                                                      $("#ID_CLIENT").html("<?=$cl?>");
                                                       $("#ID_TYPE_REMISE_ASS").val("");
                                                       $("#ID_ASSURANCE").html("<?=$ass?>");
                                                       console.log(resp[2]);//
@@ -1021,7 +1036,7 @@ if(QUANTITE){
                                                       $("#MONTANT_ASSURANCE").val(0);
                                                       $("#MONTANT_REMISE").val(0);
                                                       $("#ID_TYPE_REMISE_CLIENT").val("");
-                                                      $("#ID_CLIENT").html('<?=$cl?>');
+                                                      $("#ID_CLIENT").html("<?=$cl?>");
                                                       $("#ID_TYPE_REMISE_ASS").val("");
                                                       $("#ID_ASSURANCE").html("<?=$ass?>");
                                                       // console.log(stutus);//
@@ -1075,7 +1090,7 @@ if(QUANTITE){
                                                       $("#MONTANT_PAYE").val(resp[2]);
                                                       $("#MONTANT_TOTAL").val(resp[2]);
                                                       $("#ID_TYPE_REMISE_CLIENT").val("");
-                                                      $("#ID_CLIENT").html('<?=$cl?>');
+                                                      $("#ID_CLIENT").html("<?=$cl?>");
                                                       $("#ID_TYPE_REMISE_ASS").val("");
                                                       $("#ID_ASSURANCE").html("<?=$ass?>");
                                                       // console.log(stutus);//
@@ -1141,7 +1156,7 @@ if(QUANTITE){
                                                       $("#MONTANT_PAYE").val(resp[2]);
                                                       $("#MONTANT_TOTAL").val(resp[2]);
                                                       $("#ID_TYPE_REMISE_CLIENT").val("");
-                                                      $("#ID_CLIENT").html('<?=$cl?>');
+                                                      $("#ID_CLIENT").html("<?=$cl?>");
                                                       $("#ID_TYPE_REMISE_ASS").val("");
                                                       $("#ID_ASSURANCE").html("<?=$ass?>");
                                                       // console.log(stutus);//

@@ -33,6 +33,10 @@
                 <h3 class="card-title"> <?=$stitle?></h3>
               </div>
         <div class="card-body">
+           <?php 
+                          // if(!empty($this->session->flashdata('message')))
+                             echo $this->session->flashdata('message');
+            ?>
           <form action="<?=base_url('configuration/Barcode')?>" method='POST'>
                   <div class="row">
                     

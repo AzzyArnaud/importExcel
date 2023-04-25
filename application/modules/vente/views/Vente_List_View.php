@@ -123,17 +123,18 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>##</th>
                 <th>Date</th>
                 <th>Par</th>
                 <th>Montant Remise</th>
                 <th>Montant Paye</th>
                 <th>Montant Total</th>
-                <th>Options</th>
+                <th>Options</th> 
             </tr>
         </thead>
         <tbody>
           <?php
-
+$i=1;
           foreach ($vente as $key) 
          {
 
@@ -167,7 +168,8 @@
           $remises .='</table>';
               
           echo "<tr>
-                <td>".$key['ID_VENTE']."</td>
+                <td>".$i."</td>
+                <td>".$i."-".$key['ID_VENTE']."</td>
                 <td>".$key['DATE_TIME_VENTE']."</td>
                 <td>".$key['NOM']." ".$key['PRENOM']."</td>
                 <td class='text-right'>".number_format($key['MONTANT_REMISE'], 0,',',' ')."</td>
@@ -202,6 +204,7 @@
          // </td></tr>";
         echo "<td>".$modadcontent."<button id='facture-".$key['ID_VENTE']."' class='btn btn-success btn-sm facture' role='button'><i class='fa fa-print' aria-hidden='true'></i> Facture </button>
          </td></tr>";
+         $i++;
        }
           ?>
             
@@ -289,12 +292,19 @@ document.getElementById("myForm").submit();
                                                                        
                   success:function(data)
                                       {  
-                                         // alert(data); 
+                                         // alert(data);
+
+                                         var inform= data.split("|");
 
                                           $('#infos').html(''); 
-                                          $('#infos').html(data); 
+                                          $('#infos').html(inform[0]); 
 
-                                      printDiv();                                                  
+                                      if(inform[1]==0){
+                                        printDiv();  
+                                      }else{
+                                        alert("ECHEC D'IMPRESSION FACTURE")
+                                      }
+                                                                                      
                                        }
                 });
         });

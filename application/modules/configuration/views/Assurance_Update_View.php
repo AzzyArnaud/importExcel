@@ -33,6 +33,7 @@
                   <div class="form-group col-lg-6">
                     <label for="exampleInputEmail1">ASSURANCE:<spam class="text-danger">*</spam></label>
                     <input type="text" name="NOM_ASSURANCE" class="form-control" value="<?php echo $data['NOM_ASSURANCE']?>">
+                    <input type="hidden" name="NOM_ASSURANCE_old" class="form-control" value="<?php echo $data['NOM_ASSURANCE']?>">
                     <?php echo form_error('NOM_ASSURANCE', '<div class="text-danger">', '</div>'); ?>
                   </div>
 

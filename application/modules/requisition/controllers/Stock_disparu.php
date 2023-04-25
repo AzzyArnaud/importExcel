@@ -30,7 +30,7 @@ $cond="";
 
                  
                 // $resultat=$this->Model->getRequete("SELECT p.*, (SELECT IFNULL(SUM(QUANTITE),0) from req_stock_disparu where ID_PRODUIT=p.ID_PRODUIT) as NOMBRE  FROM saisie_produit p WHERE ID_PRODUIT IN (SELECT ID_PRODUIT FROM req_stock_disparu)   ORDER BY NOM_PRODUIT");
-      $resultat=$this->Model->getRequete("SELECT NOM,PRENOM,NOM_PRODUIT,rd.ID_PRODUIT,IFNULL(SUM(QUANTITE),0) NOMBRE,PRIX_VENTE,MAX(rd.DATE_TIME) DATE_TIME FROM req_stock_disparu rd left join saisie_produit p on rd.ID_PRODUIT=p.ID_PRODUIT left join config_user u on rd.ID_USER=u.ID_USER WHERE 1 ".$cond." GROUP BY NOM_PRODUIT,ID_PRODUIT,PRIX_VENTE,NOM,PRENOM ORDER BY NOM_PRODUIT");
+      $resultat=$this->Model->getRequete("SELECT NOM,PRENOM,NOM_PRODUIT,rd.ID_PRODUIT,IFNULL(SUM(QUANTITE),0) NOMBRE,PRIX_VENTE,MAX(DATE) DATE FROM req_stock_disparu rd left join saisie_produit p on rd.ID_PRODUIT=p.ID_PRODUIT left join config_user u on rd.ID_USER=u.ID_USER WHERE 1 ".$cond." GROUP BY NOM_PRODUIT,ID_PRODUIT,PRIX_VENTE,NOM,PRENOM ORDER BY NOM_PRODUIT");
        $tabledata=array();
        $i=1;
       foreach ($resultat as $key)
@@ -41,7 +41,7 @@ $cond="";
               $point[]=$key['NOM_PRODUIT'];
               $point[]=$key['NOMBRE'];
               $point[]=$key['PRIX_VENTE'];
-              $point[]=$key['DATE_TIME'];
+              $point[]=$key['DATE'];
               $point[]=$key['NOM']." ".$key['PRENOM'];
               
               
@@ -62,6 +62,7 @@ $cond="";
       $data['points']=$tabledata;
       $data['dt']=$dt;
       $data['dt1']=$dt1;
+      // exit();
 
 
       $this->load->view('Stock_disparu_View',$data);
@@ -81,7 +82,7 @@ $cond="";
 
                  
                 // $resultat=$this->Model->getRequete("SELECT p.*, (SELECT IFNULL(SUM(QUANTITE),0) from req_stock_disparu where ID_PRODUIT=p.ID_PRODUIT) as NOMBRE  FROM saisie_produit p WHERE ID_PRODUIT IN (SELECT ID_PRODUIT FROM req_stock_disparu)   ORDER BY NOM_PRODUIT");
-      $resultat=$this->Model->getRequete("SELECT ID_STOCK_DISPARU,NOM,PRENOM,NOM_PRODUIT,rd.ID_PRODUIT,QUANTITE as NOMBRE,PRIX_VENTE,rd.DATE_TIME DATE_TIME FROM req_stock_disparu rd left join saisie_produit p on rd.ID_PRODUIT=p.ID_PRODUIT left join config_user u on rd.ID_USER=u.ID_USER WHERE 1 ".$cond."  ORDER BY NOM_PRODUIT");
+      $resultat=$this->Model->getRequete("SELECT ID_STOCK_DISPARU,NOM,PRENOM,NOM_PRODUIT,rd.ID_PRODUIT,QUANTITE as NOMBRE,PRIX_VENTE,rd.DATE DATE FROM req_stock_disparu rd left join saisie_produit p on rd.ID_PRODUIT=p.ID_PRODUIT left join config_user u on rd.ID_USER=u.ID_USER WHERE 1 ".$cond."  ORDER BY NOM_PRODUIT");
        $tabledata=array();
        $i=1;
       foreach ($resultat as $key)
@@ -92,7 +93,7 @@ $cond="";
               $point[]=$key['NOM_PRODUIT'];
               $point[]=$key['NOMBRE'];
               $point[]=$key['PRIX_VENTE'];
-              $point[]=$key['DATE_TIME'];
+              $point[]=$key['DATE'];
               $point[]=$key['NOM']." ".$key['PRENOM'];
               $point[]="<div class='modal fade' id='desactcat".$key['ID_STOCK_DISPARU']."' tabindex='-1' role='dialog'    aria-labelledby='basicModal' aria-hidden='true'>
                      <div class='modal-dialog modal-sm'>
@@ -147,10 +148,25 @@ $cond="";
 
     public function delete($id,$dt='',$dt1=''){
 
-      $this->Model->delete("req_stock_disparu",array("ID_STOCK_DISPARU"=>$id));
+      $check=$this->Model->getOne("stock_ob",array("ID_STOCK_DISPARU"=>$id,"statut"=>0));
 
+      if(!empty($check)){
+        $this->Model->delete("stock_ob",array("ID_STOCK_DISPARU"=>$id));
+        $this->Model->delete("req_stock_disparu",array("ID_STOCK_DISPARU"=>$id));
+  $message = "<div class='alert alert-success'>
+                            Suppression avec succes
+                      </div>";
        $this->session->set_flashdata(array('message'=>$message));
-      redirect(base_url('requisition/Stock_disparu/detail/'.$dt.'/'.$dt1));  
+      redirect(base_url('requisition/Stock_disparu/detail/'.$dt.'/'.$dt1));
+      }else{
+        $message = "<div class='alert alert-danger'>
+                            Echec de suppression car c'est deja envoyé chez OBR
+                      </div>";
+       $this->session->set_flashdata(array('message'=>$message));
+      redirect(base_url('requisition/Stock_disparu/detail/'.$dt.'/'.$dt1));
+      }
+
+        
     }
 
     public function nouveau(){
@@ -164,11 +180,32 @@ $cond="";
             "ID_PRODUIT"=>$this->input->post("ID_PRODUIT"),
             "QUANTITE"=>$this->input->post("QT"),
             "PRIX_VENTE"=>$this->input->post("PRIX_VENTE"),
+            "DATE"=>$this->input->post("DATE"),
             "ID_SOCIETE"=>$this->session->userdata('STRAPH_ID_SOCIETE'),
             "ID_USER"=>$this->session->userdata('STRAPH_ID_USER'),
       );
 
-      $this->Model->create("req_stock_disparu",$data);
+      $id_disp=$this->Model->insert_last_id("req_stock_disparu",$data);
+
+      $newDate = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s"))); 
+
+      $prod=$this->Model->getone("saisie_produit",array("ID_PRODUIT"=>$this->input->post("ID_PRODUIT")));
+
+                    $this->Model->create('stock_ob',
+                                            array(
+                                              "item_code"=>$this->input->post("ID_PRODUIT"),
+                                              "item_designation"=>$prod["NOM_PRODUIT"],
+                                              "item_quantity"=>$this->input->post("QT"),
+                                              "item_measurement_unit"=>'Produit',
+                                              "item_purchase_or_sale_price"=>$this->input->post("PRIX_VENTE"),
+                                              "item_purchase_or_sale_currency"=>'BIF',
+                                              "item_movement_type"=>'SAJ',
+                                              "item_movement_invoice_ref"=>'',
+                                              "item_movement_description"=>'Ajustement',
+                                              "item_movement_date"=>$newDate,
+                                              "ID_STOCK_DISPARU"=>$id_disp
+                                            )
+                                          );
 
       redirect(base_url('requisition/Stock_disparu/'));  
     }
@@ -181,16 +218,52 @@ $cond="";
     }
 
     public function save_modifier($id){
+
+$check=$this->Model->getOne("stock_ob",array("ID_STOCK_DISPARU"=>$id,"statut"=>0));
+
+      if(!empty($check)){
+
        $data=array(
             "ID_PRODUIT"=>$this->input->post("ID_PRODUIT"),
             "QUANTITE"=>$this->input->post("QT"),
             "PRIX_VENTE"=>$this->input->post("PRIX_VENTE"),
+            "DATE"=>$this->input->post("DATE"),
             "ID_SOCIETE"=>$this->session->userdata('STRAPH_ID_SOCIETE'),
             "ID_USER"=>$this->session->userdata('STRAPH_ID_USER'),"ENVOIE"=>0
       );
-
+$message = "<div class='alert alert-success'>
+                            Modification avec succes
+                      </div>";
+       $this->session->set_flashdata(array('message'=>$message));
       $this->Model->update("req_stock_disparu",array("ID_STOCK_DISPARU"=>$id),$data);
+      $this->Model->delete("stock_ob",array("ID_STOCK_DISPARU"=>$id));
+      $newDate = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s"))); 
+
+      $prod=$this->Model->getone("saisie_produit",array("ID_PRODUIT"=>$this->input->post("ID_PRODUIT")));
+
+                    $this->Model->create('stock_ob',
+                                            array(
+                                              "item_code"=>$this->input->post("ID_PRODUIT"),
+                                              "item_designation"=>$prod["NOM_PRODUIT"],
+                                              "item_quantity"=>$this->input->post("QT"),
+                                              "item_measurement_unit"=>'Produit',
+                                              "item_purchase_or_sale_price"=>$this->input->post("PRIX_VENTE"),
+                                              "item_purchase_or_sale_currency"=>'BIF',
+                                              "item_movement_type"=>'SAJ',
+                                              "item_movement_invoice_ref"=>'',
+                                              "item_movement_description"=>'Ajustement',
+                                              "item_movement_date"=>$newDate,
+                                              "ID_STOCK_DISPARU"=>$id
+                                            )
+                                          );
 
       redirect(base_url('requisition/Stock_disparu/detail'));  
+    }else{
+        $message = "<div class='alert alert-danger'>
+                            Echec de Modification car c'est deja envoyé chez OBR
+                      </div>";
+       $this->session->set_flashdata(array('message'=>$message));
+      redirect(base_url('requisition/Stock_disparu/detail'));
+      }
     }
 }

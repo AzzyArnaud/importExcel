@@ -123,7 +123,7 @@
                      </div>
                      <div class="form-group col-md-6">
                             <label for="ID_PRODUIT">
-                          Possède de facture? 
+                          ? 
                           <i class="text-danger"> *</i>
                         </label><br>
                         <label class="radio-inline">

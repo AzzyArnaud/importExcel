@@ -25,6 +25,11 @@
               <div class="card-header">
                 <h3 class="card-title">Nouveau Assurance</h3>
               </div>
+
+              <?php 
+                          // if(!empty($this->session->flashdata('message')))
+                             echo $this->session->flashdata('message');
+            ?>
               <!-- /.card-header -->
               <!-- form start -->
               <form  id="FormData" action="<?php echo base_url()?>configuration/Assurance/insert" method="POST" enctype="multipart/form-data">

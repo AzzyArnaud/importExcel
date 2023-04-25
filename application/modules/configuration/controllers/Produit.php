@@ -160,6 +160,9 @@ class Produit extends CI_Controller {
       redirect(base_url('configuration/Produit'));  
     }
 
+    public function getProduitPrice(){
+     $prod= $this->Model->getOne("saisie_produit",array("ID_PRODUIT"=>$this->input->post("ID_PRODUIT")));
 
-
+     echo $prod['PRIX_PRODUIT'];
+    }
 }

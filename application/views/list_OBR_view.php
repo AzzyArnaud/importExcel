@@ -39,9 +39,10 @@
                       <input type="date" class="form-control" id="DATE1" onchange="change();" value="<?=$date2?>"/>
                       
                     </div>
-                    <div class="form-group col-lg-1">
-                      <label for="exampleInputEmail1" style="color:white">.</label>
-                      <!-- <button type="submit" class="btn btn-success">G&eacute;nr&eacute;rer</button> -->
+                    <div class="form-group col-sm-4">
+                      <label for="exampleInputEmail1">~<spam class="text-danger">*</spam> </label>
+                      <input type="text" class="form-control" id="INTERVAL" onchange="change();" value="" disabled />
+                      
                     </div>
                   </div>
                 </form>
@@ -56,6 +57,7 @@
         <th>DATE ENVOIE OBR</th>
         <th>CLIENT</th>
         <th>PRODUITS</th>
+        <th>ASSURANCE</th>
         <th>MONTANT</th>
         <th>ACTION</th>
       </tr>
@@ -140,6 +142,12 @@
             type:"POST",
             data:{DT1:"<?=$dt?>",DT2:"<?=$date2?>"}
         },
+    "drawCallback": function (settings) { 
+        // Here the response
+        var response = settings.json;
+        // console.log(response.general);
+        $("#INTERVAL").val(response.general+"~"+response.envoi)
+    },
         lengthMenu: [[10,50, 100, row_count], [10,50, 100, "All"]],
     pageLength: 10,
         "columnDefs":[{

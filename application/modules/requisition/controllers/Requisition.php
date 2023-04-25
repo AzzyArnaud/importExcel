@@ -286,16 +286,39 @@ $html = null;
         'MONTANT_TOTAL_ACHAT'=>$sub_tot,
         'ID_USER_REQUISITION'=>$this->input->post('ID_USER_REQUISITION'),
         'ID_USER_SAISIE'=>$this->session->userdata('STRAPH_ID_USER'),
-        'ID_FOURNISSEUR'=>$this->input->post('ID_FOURNISSEUR'),
+        'ID_FOURNISSEUR'=>$this->input->post('ID_FOURNISSEUR'), 
         'DATE_PERAMPTION'=>$items['DATE_PERAMPTION'],
         'PRIX_VENTE_UNITAIRE'=>$items['PRIX_VENTE_UNITAIRE'],
         'HAVE_FACTURE'=>$items['HAVE_FACTURE'],
         'ID_SOCIETE'=>$this->session->userdata('STRAPH_ID_SOCIETE'),
         );
 
+    
+
 $this->Model->update('saisie_produit',array("ID_PRODUIT"=>$items['ID_PRODUIT']),array("PRIX_PRODUIT"=>$items['PRIX_VENTE_UNITAIRE'],"ENVOIE"=>0));
     $this->Model->create('req_requisition',$requisition);
 
+
+$name = $this->Model->getRequeteOne('SELECT NOM_PRODUIT,AGREE_LOCAL FROM saisie_produit where ID_PRODUIT = '.$items['ID_PRODUIT'].'');
+   
+
+    $newDate = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s"))); 
+
+                  if($items['HAVE_FACTURE']==1&&$name['AGREE_LOCAL']==1)
+                    $this->Model->create('stock_ob',
+                                            array(
+                                              "item_code"=>$items['ID_PRODUIT'],
+                                              "item_designation"=>$name["NOM_PRODUIT"],
+                                              "item_quantity"=>$items['QUANTITE'],
+                                              "item_measurement_unit"=>'Produit',
+                                              "item_purchase_or_sale_price"=>$items['PRIX_ACHAT_UNITAIRE'],
+                                              "item_purchase_or_sale_currency"=>'BIF',
+                                              "item_movement_type"=>'EN',
+                                              "item_movement_invoice_ref"=>'',
+                                              "item_movement_description"=>'requisition',
+                                              "item_movement_date"=>$newDate
+                                            )
+                                          );
   }
 
 

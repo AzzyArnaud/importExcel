@@ -101,7 +101,7 @@
           }
           
           if ($MODE == 2 || $MODE == 0) {
-       $resultatp=$this->Model->getRequete('SELECT NOM_PRODUIT, DATE(DATE_TIME) AS DATE_TIME, COUNT(NOM_PRODUIT) AS NOMBRE FROM `req_stock_endomage` JOIN saisie_produit ON saisie_produit.ID_PRODUIT = req_stock_endomage.ID_PRODUIT WHERE 1 '.$conddatedeux.' GROUP BY NOM_PRODUIT, DATE(DATE_TIME)');
+       $resultatp=$this->Model->getRequete('SELECT NOM_PRODUIT, DATE(`req_stock_endomage`.DATE_TIME) AS DATE_TIME, COUNT(NOM_PRODUIT) AS NOMBRE FROM `req_stock_endomage` JOIN saisie_produit ON saisie_produit.ID_PRODUIT = req_stock_endomage.ID_PRODUIT WHERE 1 '.$conddatedeux.' GROUP BY NOM_PRODUIT, DATE(`req_stock_endomage`.DATE_TIME)');
          $tot = 0;
           foreach ($resultatp as $key) 
          {

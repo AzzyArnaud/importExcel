@@ -35,6 +35,11 @@
         <div class="card-body">
           <form action="<?=base_url('requisition/Stock_disparu/save_modifier/'.$disp['ID_STOCK_DISPARU'])?>" method='POST'>
                   <div class="row">
+                    <div class="form-group col-md-2">
+                      <label >Date </label>
+                      <input required type="date" class="form-control" id="DATE" name="DATE" value="<?=$disp['DATE']?>" />
+                     
+                    </div>
                     <div class="form-group col-md-3">
           <label for="">
                           Produit 
@@ -55,12 +60,12 @@
                     </select>
                 </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                       <label for="exampleInputEmail1">Quantité </label>
                       <input required type="number" class="form-control" id="QT" name="QT" value="<?=$disp['QUANTITE']?>" />
                      
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                       <label for="exampleInputEmail1">PRIX DE VENTE UNITAIRE</label>
                       <input required type="number" class="form-control" id="PRIX_VENTE" name="PRIX_VENTE" value="<?=$disp['PRIX_VENTE']?>"/>
                      
@@ -132,4 +137,27 @@
 
 <script type="text/javascript">
    $('.select').select2();
+</script>
+<script type="text/javascript">
+  $(document).on('change','#ID_PRODUIT',function(event){
+
+
+    var ID_PRODUIT=$("#ID_PRODUIT").val();
+
+          
+                 $.ajax({
+                            url:"<?php echo base_url() ?>configuration/Produit/getProduitPrice",
+                            method:"POST",
+                         // async:false,
+                            data: {ID_PRODUIT:ID_PRODUIT},
+                                                                                  
+                            success:function(stutus)
+                                                    { 
+                                                      $("#PRIX_VENTE").val(stutus);
+                                                    }
+        
+                        });
+
+
+});
 </script>

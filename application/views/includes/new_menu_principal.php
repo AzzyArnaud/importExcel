@@ -44,7 +44,7 @@
           <?php
       if (in_array('3',$this->session->userdata('STRAPH_DROIT'))){
       ?>
-          <li class="nav-item <?php if($this->router->class == 'Stat_Vente_Med' || $this->router->class == 'Useras'|| $this->router->class == 'Barcodeasd'|| $this->router->class == 'RAPPORT_PRODUIT_VENTE'){ echo 'menu-open';} else{ echo '';}  ?>">
+          <li class="nav-item <?php if($this->router->class == 'Stat_Vente_Med' || $this->router->class == 'Useras'|| $this->router->class == 'Barcodeasd'|| $this->router->class == 'RAPPORT_PRODUIT_VENTE'|| $this->router->class == 'Rapport_vente_text'){ echo 'menu-open';} else{ echo '';}  ?>">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
@@ -66,8 +66,14 @@
                   <p>Vente Medicament</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="<?=base_url('vente/Rapport_vente_text')?>" class="nav-link <?php if($this->router->class == 'Rapport_vente_text' ){ echo 'active';} else{ echo '';}  ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Rapport text vente</p>
+                </a>
+              </li>
 
-            <li class="nav-item">
+           <!--  <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p> Achat </p>
@@ -100,7 +106,7 @@
                 <i class="far fa-circle nav-icon"></i>
                 <p> Livraison </p>
               </a>
-            </li>
+            </li> -->
 
   
             </ul>
@@ -296,6 +302,12 @@
                   <p>Stock Endomag&eacute;</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="<?=base_url('requisition/Stock_disparu')?>" class="nav-link <?php if($this->router->class == 'Stock_disparu' ){ echo 'active';} else{ echo '';}  ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Stock disparu</p>
+                </a>
+              </li>
               
               <li class="nav-item">
                 <a href="<?=base_url('requisition/Rapport_requisition')?>" class="nav-link <?php if($this->router->class == 'Rapport_requisition' ){ echo 'active';} else{ echo '';}  ?>">
@@ -392,7 +404,18 @@
 
               <i class=""></i>
               <p>
-                OBR
+                VENTES DEJA ENVOYEES
+                
+              </p>
+            </a>
+           
+          </li>
+          <li class="nav-item <?php if($this->router->class == 'Assc_Controller'  ){ echo 'menu-open';} else{ echo '';}  ?>">
+            <a href="<?=base_url('assc_liste/Assc_Controller')?>" class="nav-link">
+
+              <i class=""></i>
+              <p>
+                MONTANT ASSURANCE
                 
               </p>
             </a>

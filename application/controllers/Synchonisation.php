@@ -34,9 +34,9 @@ class Synchonisation extends CI_Controller {
        $data=array();
        foreach ($infos as $key ) {
           if($key['Tables_in_pharmacie_st_raphael']=='vente_detail'){
-          $tmp=array($key['Tables_in_pharmacie_st_raphael']=>$this->Model->getRequete('select* from '.$key['Tables_in_pharmacie_st_raphael'].' where ENVOIE=0 and ID_VENTE>0 limit 1000'));
+          $tmp=array($key['Tables_in_pharmacie_st_raphael']=>$this->Model->getRequete('select* from '.$key['Tables_in_pharmacie_st_raphael'].' where ENVOIE=0 and ID_VENTE>0 limit 200'));
         }else
-        $tmp=array($key['Tables_in_pharmacie_st_raphael']=>$this->Model->getRequete('select* from '.$key['Tables_in_pharmacie_st_raphael'].' where ENVOIE=0 limit 1000'));
+        $tmp=array($key['Tables_in_pharmacie_st_raphael']=>$this->Model->getRequete('select* from '.$key['Tables_in_pharmacie_st_raphael'].' where ENVOIE=0 limit 200'));
            //$tmp=array($key['Tables_in_pharmacie_st_raphael']=>$this->Model->getList($key['Tables_in_pharmacie_st_raphael'],array("ENVOIE"=>0)));
            // if($key['Tables_in_pharmacie_st_raphael']!='saisie_produit'&&$key['Tables_in_pharmacie_st_raphael']!='vente_vente'&&$key['Tables_in_pharmacie_st_raphael']!='vente_remise'&&$key['Tables_in_pharmacie_st_raphael']!='vente_detail'&&$key['Tables_in_pharmacie_st_raphael']!='req_requisition'&&$key['Tables_in_pharmacie_st_raphael']!='req_barcode')
            // if($key['Tables_in_pharmacie_st_raphael']=='req_barcode_efface')

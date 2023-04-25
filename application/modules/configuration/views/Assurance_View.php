@@ -30,6 +30,10 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+                <?php 
+                          // if(!empty($this->session->flashdata('message')))
+                             echo $this->session->flashdata('message');
+            ?>
                 <table id="example1" class="table table-bordered table-striped table-hover">
     <thead>
       <tr>
