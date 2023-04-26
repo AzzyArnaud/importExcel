@@ -296,6 +296,8 @@
                   <p>Sortie Stock</p>
                 </a>
               </li>
+
+              
               <li class="nav-item">
                 <a href="<?=base_url('requisition/Declassement')?>" class="nav-link <?php if($this->router->class == 'Declassement' ){ echo 'active';} else{ echo '';}  ?>">
                   <i class="far fa-circle nav-icon"></i>
