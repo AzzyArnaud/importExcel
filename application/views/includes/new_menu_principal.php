@@ -421,6 +421,17 @@
             </a>
            
           </li> 
+          <li class="nav-item <?php if($this->router->class == 'Facture'  ){ echo 'menu-open';} else{ echo '';}  ?>">
+            <a href="<?=base_url('facture/Facture')?>" class="nav-link">
+
+              <i class=""></i>
+              <p>
+                FACTURE ASSURANCE
+                
+              </p>
+            </a>
+           
+          </li> 
           <?php 
         }
             // if (in_array('13',$this->session->userdata('STRAPH_DROIT'))){
