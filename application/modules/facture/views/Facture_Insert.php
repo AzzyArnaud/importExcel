@@ -20,14 +20,13 @@ include VIEWPATH.'includes/new_header.php';
           <div class="col-12">
             <div class="card card-success">
               <div class="card-header">
-                <h3 class="card-title">Ajouer La Facture</h3>
+                <h3 class="card-title">Ajouter La Facture</h3>
               </div>
               <div class="card-body">
                 <?=$this->session->flashdata('message')?>
                 <form enctype="multipart/form-data" method="post" action="<?=base_url()?>facture/Facture/Insert">
 
                   <div class="row">
-
                     <div class="form-group col-md-3 col-sm-3 col-xs-3">
                       <label for="exampleInputName2">MOIS</label>
                       <input type="month" class="form-control float-right" name="MOIS" value="<?=set_value('MOIS');?>">

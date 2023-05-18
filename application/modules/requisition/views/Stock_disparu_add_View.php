@@ -23,7 +23,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       
-    </section>
+    </section> 
     <!-- Main content -->
     <section class="content">
       
@@ -40,12 +40,14 @@
                       <input required type="date" class="form-control" id="DATE" name="DATE" />
                      
                     </div>
+                  </div>
+                  <div class="row">
                     <div class="form-group col-md-3">
-          <label for="">
+                      <label for="">
                           Produit 
                         </label>
-                    <select required class="form-control select select2-success" data-dropdown-css-class="select2-success" name="ID_PRODUIT" id="ID_PRODUIT">
-                              <option value=""> </option>
+                    <select  class="form-control select select2-success" data-dropdown-css-class="select2-success" name="ID_PRODUIT" id="ID_PRODUIT">
+                              <option value="0">-</option>
 
                               <?php 
                               foreach ($prod as $key) {
@@ -57,19 +59,27 @@
 
                               ?>
                     </select>
-                </div>
-
-                    <div class="form-group col-md-2">
-                      <label for="exampleInputEmail1">Quantité </label>
-                      <input required type="number" class="form-control" id="QT" name="QT" />
-                     
                     </div>
+
+                    
                     <div class="form-group col-md-2">
                       <label for="exampleInputEmail1">PRIX DE VENTE UNITAIRE</label>
-                      <input required type="number" class="form-control" id="PRIX_VENTE" name="PRIX_VENTE" />
+                      <input  type="number"  min="0" class="form-control" id="PRIX_VENTE" name="PRIX_VENTE" />
                      
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
+                      <label for="exampleInputEmail1">Quantité </label>
+                      <input  type="number" min="0" class="form-control" id="QT" name="QT" />
+                     
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for=""> _ </label>
+                        <a  class="btn btn-success btn-block" onclick="addElement()">+</a>
+                     </div>
+                     <div class="form-group col-md-12" id="RESULTAT">
+                       
+                     </div>
+                    <div class="form-group col-md-12">
                       <label for="exampleInputEmail1" style="color: white">. </label>
                       <input  type="submit" class="form-control btn btn-success btn-block" id="submit" name="submit" value="Enregistrer" />
                      
@@ -159,4 +169,61 @@
 
 
 });
+</script>
+<script type="text/javascript">
+   function addElement(){
+    var ID_PRODUIT=$('#ID_PRODUIT').val();
+        var PRIX_VENTE=$('#PRIX_VENTE').val();
+        var QUANTITE=$('#QT').val();
+
+         
+if(ID_PRODUIT&&PRIX_VENTE&&QUANTITE){
+        
+
+
+          $.post('<?php echo base_url();?>requisition/Stock_disparu/add_cart',
+                {
+                ID_PRODUIT:ID_PRODUIT,
+                PRIX_VENTE:PRIX_VENTE,
+                QUANTITE:QUANTITE
+                },
+                function(data) 
+                { 
+                    // RESULTAT.innerHTML = data;  
+                    $('#RESULTAT').html(data);
+
+                    $('#ID_PRODUIT').val("");
+                    $('#PRIX_VENTE').val(null);
+                    $('#QT').val(null);   
+                }
+            ); 
+
+         
+}else{
+  alert("verifier bien vos champs de saisie");
+}
+        
+}
+</script>
+<script type="text/javascript">
+  
+  function remove_medicament(id) {
+    var rowid=id;
+    // alert(rowid);
+
+    $.post('<?php echo base_url();?>requisition/Stock_disparu/remove_',
+  {
+    rowid:rowid   
+    },
+    function(data) 
+    { 
+    RESULTAT.innerHTML = data;  
+    $('#RESULTAT').html(data);
+
+    $('#PRIX_ACHAT_UNITAIRE').val(null);
+    $('#QUANTITE').val(null);
+    $('#DATE_PERAMPTION').val(null);
+    $('#PRIX_VENTE_UNITAIRE').val(null);
+    }); 
+  }
 </script>

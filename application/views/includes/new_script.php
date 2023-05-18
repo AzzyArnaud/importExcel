@@ -44,3 +44,31 @@
 
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url() ?>dist/js/demo.js"></script>
+<script>
+	        function play_sonnerie(){
+   // do whatever you like here
+
+// 
+
+ $.ajax({
+                            url:"<?php echo base_url() ?>Commande/check_nouveau",
+                            method:"POST",
+                         // async:false,
+                            data: {},
+                                                                                 
+                            success:function(stutus)
+                                                        {
+                                                        	// alert(stutus);
+                                                        if (stutus=="ok") {
+                                                        	
+new Audio("<?=base_url('uploads/sonnerie/sound.mp3')?>").play();
+                                                        }
+                                                    	}
+        
+                                                    });
+	    setTimeout(play_sonnerie, 65000);
+		}
+$(document).ready(function(){
+	play_sonnerie();
+ })
+</script>

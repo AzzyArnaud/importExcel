@@ -185,7 +185,7 @@ $pro="<option value=''> </option>";
                     }
 
                     ?>
-          </select>
+          </select>QUANTITE EN STOCK: <span id="stock" style="color: red"></span>
                 </div>
       </form>
     </div>
@@ -967,6 +967,7 @@ if(QUANTITE){
    
                                                       $("#MONTANT_PAYE").val(resp[2]);
                                                       $("#MONTANT_TOTAL").val(resp[2]);
+                                                      $("#stock").html(resp[3]);
                                                       $("#ID_TYPE_REMISE_CLIENT").val("");
                                                       $("#ID_CLIENT").html("<?=$cl?>");
                                                       $("#ID_TYPE_REMISE_ASS").val("");

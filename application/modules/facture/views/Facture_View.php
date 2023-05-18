@@ -31,7 +31,7 @@ include VIEWPATH.'includes/new_header.php';
                     <tr>
                       <th>MOIS</th>
                       <th>ASSURANCE</th>
-                      <th>STATUT</th>
+                      <th>STATUS</th>
                       <th>ACTION</th>
                     </tr>
                   </thead>
@@ -143,7 +143,7 @@ include VIEWPATH.'includes/new_script.php';
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["excel", "pdf", "print", "colvis"]
+      "buttons": ["excel", "pdf"]
     }).buttons().container().appendTo('#example1_wrapper  .col-md-6:eq(0)');
     $(this).removeClass('btn-default').addClass('btn-success btn-dark');
 

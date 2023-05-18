@@ -20,7 +20,7 @@ class Stock_disparu extends CI_Controller {
      public function index($dt='',$dt1='')
     {
       $data = array();
-      $data['stitle']='Stock disparu détail';
+      $data['stitle']='Sortie Stock ajustement détail';
 
       if($dt){
 $cond=" AND rd.DATE_TIME>='".$dt."' AND rd.DATE_TIME<='".$dt1."'";
@@ -58,7 +58,7 @@ $cond="";
                 $this->table->set_heading(array('#','PRODUIT','QUANTITE','PRIX','DATE','ENREGISTRER PAR'));
 
             
-      $data['titl']="Stock DISPARU du ". date('d-m-Y');
+      $data['titl']="SORTIE Stock AJUSTEMENT  du ". date('d-m-Y');
       $data['points']=$tabledata;
       $data['dt']=$dt;
       $data['dt1']=$dt1;
@@ -72,7 +72,7 @@ $cond="";
     {
       $data = array();
     
-      $data['stitle']='Stock disparu detail';
+      $data['stitle']='SORTIE Stock AJUSTEMENT detail';
 
       if($dt){
 $cond=" AND rd.DATE_TIME>='".$dt."' AND rd.DATE_TIME<='".$dt1."'";
@@ -137,7 +137,7 @@ $cond="";
                 $this->table->set_heading(array('#','PRODUIT','QUANTITE','PRIX','DATE','ENREGISTRER PAR','ACTION'));
 
             
-      $data['titl']="Stock DISPARU du ". date('d-m-Y');
+      $data['titl']="SORTIE Stock AJUSTEMENT du ". date('d-m-Y');
       $data['points']=$tabledata;
       $data['dt']=$dt;
       $data['dt1']=$dt1;
@@ -159,6 +159,7 @@ $cond="";
        $this->session->set_flashdata(array('message'=>$message));
       redirect(base_url('requisition/Stock_disparu/detail/'.$dt.'/'.$dt1));
       }else{
+        // $this->Model->delete("req_stock_disparu",array("ID_STOCK_DISPARU"=>$id));
         $message = "<div class='alert alert-danger'>
                             Echec de suppression car c'est deja envoyé chez OBR
                       </div>";
@@ -176,10 +177,15 @@ $cond="";
     }
 
     public function save_nouveau(){
+
+       foreach ($this->cart->contents() as $items){
+    
+  if(preg_match("/SORTIE_Stock/", $items['name'])){
+
       $data=array(
-            "ID_PRODUIT"=>$this->input->post("ID_PRODUIT"),
-            "QUANTITE"=>$this->input->post("QT"),
-            "PRIX_VENTE"=>$this->input->post("PRIX_VENTE"),
+            "ID_PRODUIT"=>$items['ID_PRODUIT'],
+            "QUANTITE"=>$items['QUANTITE'],
+            "PRIX_VENTE"=>$items['PRIX_VENTE'],
             "DATE"=>$this->input->post("DATE"),
             "ID_SOCIETE"=>$this->session->userdata('STRAPH_ID_SOCIETE'),
             "ID_USER"=>$this->session->userdata('STRAPH_ID_USER'),
@@ -189,15 +195,15 @@ $cond="";
 
       $newDate = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s"))); 
 
-      $prod=$this->Model->getone("saisie_produit",array("ID_PRODUIT"=>$this->input->post("ID_PRODUIT")));
+      $prod=$this->Model->getone("saisie_produit",array("ID_PRODUIT"=>$items['ID_PRODUIT']));
 
                     $this->Model->create('stock_ob',
                                             array(
-                                              "item_code"=>$this->input->post("ID_PRODUIT"),
+                                              "item_code"=>$items['ID_PRODUIT'],
                                               "item_designation"=>$prod["NOM_PRODUIT"],
-                                              "item_quantity"=>$this->input->post("QT"),
+                                              "item_quantity"=>$items['QUANTITE'],
                                               "item_measurement_unit"=>'Produit',
-                                              "item_purchase_or_sale_price"=>$this->input->post("PRIX_VENTE"),
+                                              "item_purchase_or_sale_price"=>$items['PRIX_VENTE'],
                                               "item_purchase_or_sale_currency"=>'BIF',
                                               "item_movement_type"=>'SAJ',
                                               "item_movement_invoice_ref"=>'',
@@ -206,7 +212,10 @@ $cond="";
                                               "ID_STOCK_DISPARU"=>$id_disp
                                             )
                                           );
+    }
+    }
 
+    $this->cart->destroy();
       redirect(base_url('requisition/Stock_disparu/'));  
     }
 
@@ -266,4 +275,112 @@ $message = "<div class='alert alert-success'>
       redirect(base_url('requisition/Stock_disparu/detail'));
       }
     }
+
+    function add_cart(){
+
+     // $this->cart->destroy();
+
+      $id=$this->input->post('ID_PRODUIT');
+
+          $data_cart = array(
+              'id'      => $id,
+              'qty'     => $this->input->post('QUANTITE'),
+              'price'   => 0,
+              'name'    => 'SORTIE_Stock',
+              'ID_PRODUIT'=>$this->input->post('ID_PRODUIT'),
+              'PRIX_VENTE'=>$this->input->post('PRIX_VENTE'),
+              'QUANTITE'=>$this->input->post('QUANTITE')
+                    );
+      $this->cart->insert($data_cart);
+
+   
+    $html = null;
+  $i = 1;
+  $html .='<table class="table table-bordered">
+      <tr class="text-center"><th colspan="8" class="text-center bg-success">Liste des produits</th></tr>
+        <tr>
+        <th>Produit</th>
+        <th>PU</th>
+        <th>Q</th>
+        <th>PT</th>
+        </tr>' ;
+
+
+              $tot = 0;
+  foreach ($this->cart->contents() as $items):
+    
+  if(preg_match("/SORTIE_Stock/", $items['name'])){
+
+    $name = $this->Model->getRequeteOne('SELECT NOM_PRODUIT FROM saisie_produit where ID_PRODUIT = '.$items['ID_PRODUIT'].'');
+      $sub_tot = $items['QUANTITE'] *$items['PRIX_VENTE'];
+     
+      $html .='<tr>' ;
+      $html .='<td>'.$name['NOM_PRODUIT'].'</td>
+               <td  class="text-right">'.$items['PRIX_VENTE'].'</td>
+               <td  class="text-right">'.$items['QUANTITE'].'</td>
+               <td  class="text-right">'.$sub_tot.'</td>
+               
+               <td>
+               <button class="btn btn-danger btn-xs" type="button" onclick="remove_medicament(\''.$items['rowid'].'\')">X</button>
+               </td>' ;
+      $html .='</tr>' ;
+      $tot +=$sub_tot;
+  }
+
+    $i++;
+
+    
+
+  endforeach;
+
+     echo $html;         
+
+  }
+      public function remove_()
+    {
+
+     $rowid = $this->input->post('rowid');
+    $this->cart->remove($rowid);
+    $html = null;
+  $i = 1;
+  $html .='<table class="table table-bordered">
+      <tr class="text-center"><th colspan="8" class="text-center bg-success">Liste des produits</th></tr>
+        <tr>
+        <th>Produit</th>
+        <th>PU</th>
+        <th>Q</th>
+        <th>PT</th>
+        </tr>' ;
+
+
+              $tot = 0;
+  foreach ($this->cart->contents() as $items):
+    
+  if(preg_match("/SORTIE_Stock/", $items['name'])){
+
+    $name = $this->Model->getRequeteOne('SELECT NOM_PRODUIT FROM saisie_produit where ID_PRODUIT = '.$items['ID_PRODUIT'].'');
+      $sub_tot = $items['QUANTITE'] *$items['PRIX_VENTE'];
+     
+      $html .='<tr>' ;
+      $html .='<td>'.$name['NOM_PRODUIT'].'</td>
+               <td  class="text-right">'.$items['PRIX_VENTE'].'</td>
+               <td  class="text-right">'.$items['QUANTITE'].'</td>
+               <td  class="text-right">'.$sub_tot.'</td>
+               
+               <td>
+               <button class="btn btn-danger btn-xs" type="button" onclick="remove_medicament(\''.$items['rowid'].'\')">X</button>
+               </td>' ;
+      $html .='</tr>' ;
+      $tot +=$sub_tot;
+  }
+
+    $i++;
+
+    
+
+  endforeach;
+
+     echo $html;   
+    }
+
 }

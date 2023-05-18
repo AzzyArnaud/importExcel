@@ -165,4 +165,12 @@ class Produit extends CI_Controller {
 
      echo $prod['PRIX_PRODUIT'];
     }
+
+    public function getProduitPrice1(){
+     $prod= $this->Model->getOne("saisie_produit",array("ID_PRODUIT"=>$this->input->post("ID_PRODUIT")));
+
+$gen=$this->Model->getRequeteOne("SELECT ((SELECT IFNULL(SUM(QUANTITE),0) from req_requisition where ID_PRODUIT=p.ID_PRODUIT)-(SELECT COUNT(ID_VENTE_DETAIL) from vente_vente v join vente_detail vd on v.ID_VENTE=vd.ID_VENTE where ID_PRODUIT=p.ID_PRODUIT)-(SELECT IFNULL(SUM(QUANTITE),0) from req_stock_disparu where ID_PRODUIT=p.ID_PRODUIT)-(SELECT COUNT(ID_STOCK_ENDOMAGE) from req_stock_endomage where ID_PRODUIT=p.ID_PRODUIT)+(SELECT IFNULL(SUM(QUANTITE),0) from req_stock_entrer_ajustement where ID_PRODUIT=p.ID_PRODUIT)) as NOMBRE FROM saisie_produit p where p.ID_PRODUIT=".$this->input->post("ID_PRODUIT"));
+
+     echo $prod['PRIX_PRODUIT']."|".$gen['NOMBRE'];
+    }
 }

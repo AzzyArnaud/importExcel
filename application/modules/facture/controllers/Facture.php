@@ -19,7 +19,7 @@ class Facture extends CI_Controller {
 
     $new_name = time();
     $config = array(
-      'upload_path' => "uploads/facture/",
+      'upload_path' => "./uploads/facture/",
       'allowed_types' => "*",
     );
     $this->load->library('upload', $config);
@@ -49,7 +49,7 @@ if ($this->form_validation->run() == false) {
 
     'ID_ASSURANCE'=> $ID_ASSURANCE,
     'MOIS'=> $MOIS,
-    'FILES'=> $image,
+    'FILES'=> 'uploads/facture/'.$image,
   );
 
 
@@ -122,7 +122,7 @@ public function update()
 
   $new_name = time();
   $config = array(
-    'upload_path' => "uploads/facture/",
+    'upload_path' => "./uploads/facture/",
     'allowed_types' => "*",
   );
   $this->load->library('upload', $config);
@@ -152,7 +152,7 @@ if ($this->form_validation->run() == false) {
   $datasuser=array(
    'ID_ASSURANCE'=>$ID_ASSURANCE,
    'MOIS'=>$MOIS,
-   'FILES'=>$image,
+   'FILES'=>'uploads/facture/'.$image,
  );
 
     // print_r($datasuser);die(); 

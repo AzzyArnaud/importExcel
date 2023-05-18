@@ -131,7 +131,7 @@ $data['CUNIQUE']=$this->input->post('CUNIQUE');
      $CUNIQUE =$this->input->post('CUNIQUE');
      $QUANTITE =$this->input->post('QUANTITE');
 
-
+$gen=$this->Model->getRequeteOne("SELECT ((SELECT IFNULL(SUM(QUANTITE),0) from req_requisition where ID_PRODUIT=p.ID_PRODUIT)-(SELECT COUNT(ID_VENTE_DETAIL) from vente_vente v join vente_detail vd on v.ID_VENTE=vd.ID_VENTE where ID_PRODUIT=p.ID_PRODUIT)-(SELECT IFNULL(SUM(QUANTITE),0) from req_stock_disparu where ID_PRODUIT=p.ID_PRODUIT)-(SELECT COUNT(ID_STOCK_ENDOMAGE) from req_stock_endomage where ID_PRODUIT=p.ID_PRODUIT)+(SELECT IFNULL(SUM(QUANTITE),0) from req_stock_entrer_ajustement where ID_PRODUIT=p.ID_PRODUIT)) as NOMBRE FROM saisie_produit p where p.ID_PRODUIT=".$ID_PRODUIT);
 
      // $bar_produit = $this->Model->getOne('req_barcode',array('ID_PRODUIT'=>$ID_PRODUIT));
 
@@ -224,7 +224,7 @@ $data['CUNIQUE']=$this->input->post('CUNIQUE');
      $data['vente_no_stock'] = $this->Model->getRequete('SELECT saisie_produit.NOM_PRODUIT, req_stock.ID_STOCK, saisie_produit.ID_PRODUIT, req_stock.QUANTITE, req_requisition.PRIX_VENTE_UNITAIRE FROM saisie_produit LEFT JOIN req_stock ON req_stock.ID_PRODUIT = saisie_produit.ID_PRODUIT LEFT JOIN req_requisition ON req_requisition.ID_PRODUIT=saisie_produit.ID_PRODUIT WHERE 1');
     // $this->load->view("Vente_Add_View",$data);
 
-    echo $message."|". $produit."|".$tot;
+    echo $message."|". $produit."|".$tot."|".$gen['NOMBRE'];
   }
 
 

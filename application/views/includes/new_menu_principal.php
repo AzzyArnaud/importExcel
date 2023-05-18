@@ -253,7 +253,7 @@
             if (in_array('13',$this->session->userdata('STRAPH_DROIT'))){
             ?>
           
-          <li class="nav-item <?php if($this->router->class == 'Requisition' || $this->router->class == 'Entree_Stock'|| $this->router->class == 'Rapport_requisition' || $this->router->class == 'Stock' || $this->router->class == 'Sortie_Stock' || $this->router->class == 'Sortie_Stock' || $this->router->class == 'Declassement'|| $this->router->class == 'Stock_general'){ echo 'menu-open';} else{ echo '';}  ?>">
+          <li class="nav-item <?php if($this->router->class == 'Requisition' || $this->router->class == 'Entree_Stock'|| $this->router->class == 'Rapport_requisition' || $this->router->class == 'Stock' || $this->router->class == 'Sortie_Stock' || $this->router->class == 'Sortie_Stock' || $this->router->class == 'Declassement'|| $this->router->class == 'Stock_general'||$this->router->class == 'Stock_disparu'||$this->router->class == 'Stock_entre_ajustement'){ echo 'menu-open';} else{ echo '';}  ?>">
 
             <a href="#" class="nav-link <?php if($this->router->class == 'Requisition' || $this->router->class == 'Entree_Stock' || $this->router->class == 'Stock' || $this->router->class == 'Rapport_requisition' || $this->router->class == 'Sortie_Stock' || $this->router->class == 'Sortie_Stock' || $this->router->class == 'Declassement'|| $this->router->class == 'Rapport_requisition_text'|| $this->router->class == 'Stock_general'){ echo 'active';} else{ echo '';}  ?>">
               <i class="nav-icon fa fa-building"></i>
@@ -277,23 +277,23 @@
                   <p>Entrées Stock</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="<?=base_url('requisition/Stock')?>" class="nav-link <?php if($this->router->class == 'Stock' ){ echo 'active';} else{ echo '';}  ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Stock Actuel</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="<?=base_url('requisition/Stock_general')?>" class="nav-link <?php if($this->router->class == 'Stock_general' ){ echo 'active';} else{ echo '';}  ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Stock Général</p>
                 </a>
-              </li>
+              </li> 
 
               <li class="nav-item">
                 <a href="<?=base_url('requisition/Sortie_Stock')?>" class="nav-link <?php if($this->router->class == 'Sortie_Stock' ){ echo 'active';} else{ echo '';}  ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Sortie Stock</p>
+                  <p>Historique Sortie Stock</p>
                 </a>
               </li>
 
@@ -307,16 +307,22 @@
               <li class="nav-item">
                 <a href="<?=base_url('requisition/Stock_disparu')?>" class="nav-link <?php if($this->router->class == 'Stock_disparu' ){ echo 'active';} else{ echo '';}  ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Stock disparu</p>
+                  <p>Sortie Stock ajustement</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?=base_url('requisition/Stock_entre_ajustement')?>" class="nav-link <?php if($this->router->class == 'Stock_entre_ajustement' ){ echo 'active';} else{ echo '';}  ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Entré Stock ajustement</p>
                 </a>
               </li>
               
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="<?=base_url('requisition/Rapport_requisition')?>" class="nav-link <?php if($this->router->class == 'Rapport_requisition' ){ echo 'active';} else{ echo '';}  ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Rapports graphique</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="<?=base_url('requisition/Rapport_requisition_text')?>" class="nav-link <?php if($this->router->class == 'Rapport_requisition_text' ){ echo 'active';} else{ echo '';}  ?>">
                   <i class="far fa-circle nav-icon"></i>

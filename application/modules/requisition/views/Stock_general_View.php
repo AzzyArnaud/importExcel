@@ -44,11 +44,26 @@
 
                   </div>
                 </form>
-          <?php 
+          <!-- <?php 
 
             echo $this->table->generate($points);
 
-            ?>
+            ?> -->
+            <table id="example1" class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>PRODUIT</th>
+        <th>QUANTITE</th>
+        <th>PRIX D'ACHAT</th>
+       
+      </tr>
+    </thead>
+    <tbody class="tbody">
+     
+    </tbody>
+    
+  </table>
         </div>
         <!-- /.card-body -->
         <!-- <div class="card-footer">
@@ -103,28 +118,59 @@
 </body>
 </html>
 <script>
-        $(document).ready(function () {
-            $("#d_table").DataTable({
+        $(document).ready(function(){
+        // $('#DATE').datetimepicker({format: 'd-m-Y'});
 
-        dom: 'Bfrtlip',
+    var row_count ="1000000";
+     // alert(row_count);
+
+   $("#example1").DataTable({
+    dom: 'Bfrtlip',
          buttons: [
-             // {extend: 'print', title: ' <?=$titl?>'},
-                {extend: 'excel', title: '<?=$titl?>'},
-                {extend: 'pdf', title: ' <?=$titl?>',exportOptions: {
-   columns: ':visible:not(:eq(9))' 
+                
+                {extend: 'excel', title: 'Envoi OBR',exportOptions: {
+   columns: ':visible:not(:eq(7))' 
 },
             blengthChange: false,
             responsive: true,
             // Declare the use of the extension in the dom parameter
             dom: 'lBfrtip',
-            aLengthMenu: [
-              [10,25, 50, 100, 200, -1],
-              [10,25, 50, 100, 200, "All"]
-          ],
-          iDisplayLength: -1,
+            paging: false
+  },
+                {extend: 'pdf', title: 'Envoi OBR',exportOptions: {
+   columns: ':visible:not(:eq(7))' 
+},
+            blengthChange: false,
+            responsive: true,
+            // Declare the use of the extension in the dom parameter
+            dom: 'lBfrtip',
+            paging: false
   }
         ],
-                language: {
+        "processing":true,
+        responsive: true,
+        searching: true,
+        "bSort" : false,
+        "serverSide":true,
+        "oreder":[],
+        "ajax":{
+            url:"<?=base_url()?>requisition/Stock_general/get_info/",
+            type:"POST",
+            data:{DT1:"<?=$dt?>"}
+        },
+    "drawCallback": function (settings) { 
+        // Here the response
+        var response = settings.json;
+        // console.log(response.general);
+        $("#INTERVAL").val(response.general+"~"+response.envoi)
+    },
+        lengthMenu: [[10,50, 100, row_count], [10,50, 100, "All"]],
+    pageLength: 10,
+        "columnDefs":[{
+            "targets":[],
+            "orderable":false
+        }],
+       language: {
                 "sProcessing":     "Traitement en cours...",
                 "sSearch":         "Rechercher&nbsp;:",
                 "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
@@ -146,11 +192,10 @@
                   "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
                 }
             }
+              
+    });
 
-
-            });
-        });
-
+}); 
                         function change(date){
 
 
