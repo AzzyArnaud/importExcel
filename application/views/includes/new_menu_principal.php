@@ -440,6 +440,16 @@
             </a>
            
           </li> 
+          <li class="nav-item <?php if($this->router->class == 'Commande'  ){ echo 'menu-open';} else{ echo '';}  ?>">
+            <a href="<?=base_url('commandes/Commande')?>" class="nav-link">
+
+              <i class=""></i>
+              <p>
+                LISTE DES COMMANDES
+              </p>
+            </a>
+           
+          </li>
           <?php 
         }
             // if (in_array('13',$this->session->userdata('STRAPH_DROIT'))){

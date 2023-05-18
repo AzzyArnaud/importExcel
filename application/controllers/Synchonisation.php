@@ -159,6 +159,32 @@ class Synchonisation extends CI_Controller {
         $this->Model->create("saisie_client_tempo",$vv);
         $this->Model->update("vente_vente_tempo",array("ID_CLIENT"=>$vv['ID_CLIENT']),array("ID_CLIENT"=>$id));
       }
+      foreach ($result['commande_detail'] as $vv) {
+        $firstKey = key($vv);
+        $id=$this->Model->insert_last_id("commande_detail",array("ID_COMMANDE"=>''));
+        // unset($vd[$firstKey]);
+        $vv['ID_LOCAL']=$id;
+        $this->Model->create("commande_detail_tempo",$vv);
+      }
+
+      foreach ($result['commandes'] as $vv) {
+        $firstKey = key($vv);
+        $id=$this->Model->insert_last_id("commandes",array("ID_CLIENT"=>''));
+        // unset($vd[$firstKey]);
+        $vv['ID_LOCAL']=$id;
+        $this->Model->create("commandes_tempo",$vv);
+        $this->Model->update("commande_detail_tempo",array("ID_COMMANDE"=>$vv['ID_COMMANDE']),array("ID_COMMANDE"=>$id));
+      }
+
+      foreach ($result['users'] as $vv) {
+        $firstKey = key($vv);
+        $id=$this->Model->insert_last_id("users",array("NOM_USER"=>''));
+        // unset($vd[$firstKey]);
+        $vv['ID_LOCAL']=$id;
+        $this->Model->create("users_tempo",$vv);
+        $this->Model->update("commandes_tempo",array("ID_CLIENT"=>$vv['USER_ID']),array("ID_CLIENT"=>$id));
+      }
+      
       
 $tables=$this->Model->getRequete("SELECT * FROM INFORMATION_SCHEMA.TABLES 
 WHERE TABLE_NAME LIKE '%_tempo%'");
