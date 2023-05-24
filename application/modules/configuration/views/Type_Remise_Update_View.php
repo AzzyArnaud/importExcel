@@ -33,7 +33,7 @@
                   
                    <div class="form-group col-lg-6">
                     <label for="exampleInputPassword1">ASSURANCE:</label>
-                    <select class="custom-select" name="ID_ASSURANCE" class="form-control" value="<?php echo $data['ID_ASSURANCE']?>">
+                    <select class="form-control select select2-success" name="ID_ASSURANCE" class="form-control" value="<?php echo $data['ID_ASSURANCE']?>">
                     
                      <option value="">--- Select ---</option>
                           <?php
@@ -104,6 +104,16 @@
 </script>
 <script>
   $('#mytable').DataTable();
+</script>
+<script type="text/javascript">
+  $('#reservation').daterangepicker({
+
+        locale: {
+        format: 'DD/MM/YYYY'
+      }
+    })
+  $('.select').select2();
+
 </script>
 </body>
 </html>

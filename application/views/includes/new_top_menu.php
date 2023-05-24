@@ -96,7 +96,7 @@ $commande_tot = $commande_nontraite['nontraite'] + $commande_nontrouve['nontrouv
           <a href="<?=base_url()?>commandes/Commande/commande_non_traite" class="dropdown-item" style="color: red">
             <i class="nav-icon fas fa-gifts"></i> <?=$commande_nontraite['nontraite']?> Commandes non traitées
           </a>
-          <a href="<?=base_url()?>commandes/Commande/personne_non_trouve" class="dropdown-item" style="color: red">
+          <a href="<?=base_url()?>commandes/Commande/personne_non_trouve" class="dropdown-item" style="color: green">
             <i class="nav-icon fas fa-gifts"></i> <?=$commande_nontrouve['nontrouve']?> personnes non trouvées
           </a>
         </div>

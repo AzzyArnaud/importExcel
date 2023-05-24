@@ -4,8 +4,8 @@
           <div class="col-sm-6">
           </div>
           <div class="col-sm-6 text-right">
-          <a class="btn btn-outline-success btn-sm <?php if($this->router->method == 'index') echo 'active';?>" href="<?=base_url('configuration/Fournisseur/inserting')?>">Nouveau</a>
-          <a class="btn btn-outline-success btn-sm <?php if($this->router->method == 'listing') echo 'active';?>" href="<?=base_url('configuration/Fournisseur')?>">Liste</a>
+          <a class="btn btn-outline-success btn-sm <?php if($this->router->method == 'inserting') echo 'active';?>" href="<?=base_url('configuration/Fournisseur/inserting')?>">Nouveau</a>
+          <a class="btn btn-outline-success btn-sm <?php if($this->router->method == 'index') echo 'active';?>" href="<?=base_url('configuration/Fournisseur')?>">Liste</a>
           </div>
         </div>
       </div><!-- /.container-fluid -->

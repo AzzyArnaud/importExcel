@@ -37,8 +37,8 @@
                   </div>
 
                    <div class="form-group col-lg-6">
-                    <label for="exampleInputPassword1">CATEGORIE_PRODUIT:<spam class="text-danger">*</spam></label>
-                    <select class="custom-select" name="ID_CATEGORIE_PRODUIT" class="form-control" value="<?php echo $data['ID_CATEGORIE_PRODUIT']?>">
+                    <label for="exampleInputPassword1">CATEGORIE PRODUIT:<spam class="text-danger">*</spam></label>
+                    <select class="form-control select select2-success" name="ID_CATEGORIE_PRODUIT" class="form-control" value="<?php echo $data['ID_CATEGORIE_PRODUIT']?>">
                     
                      <option value="">--- Select ---</option>
                           <?php
@@ -107,6 +107,16 @@
 </script>
 <script>
   $('#mytable').DataTable();
+</script>
+<script type="text/javascript">
+  $('#reservation').daterangepicker({
+
+        locale: {
+        format: 'DD/MM/YYYY'
+      }
+    })
+  $('.select').select2();
+
 </script>
 </body>
 </html>
