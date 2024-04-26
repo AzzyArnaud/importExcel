@@ -1,71 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
   include VIEWPATH.'includes/new_header.php';
   ?>
 
-<div class="login-box">
-  <!-- /.login-logo -->
-  <div class="card card-outline card-success">
-    <div class="card-header text-center">
-      <b class="h3 text-success">Pharmacie St Raphael</b>
-      <br>Stock & Vente
-    </div>
-    <div class="card-body">
-      <p class="login-box-msg">Connectez-vous pour démarrer votre session</p>
 
-      <!-- <?php if($message) echo $message ?> -->
-      <?php 
-                          if(!empty($this->session->flashdata('message')))
-                             echo $this->session->flashdata('message');
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0 bg-dark">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5 ">
+              <div class="brand-logo text-center">
+                <img src="<?=base_url()?>assets/images/invest_logo.png" alt="logo">
+              </div>
+              <!-- <h4>Hello! let's get started</h4>
+              <h6 class="fw-light">Sign in to continue.</h6> -->
+              <?php 
+                          if(!empty($this->session->userdata('message')))
+                             echo $this->session->userdata('message');
             ?>
+              <form class="pt-3" action="<?= base_url('Login/do_login') ?>" method="post">
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                    placeholder="Username" name="USERNAME">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword1"
+                    placeholder="Password" name="PASSWORD">
+                </div>
+                <div class="mt-3">
+                  <!-- <a class="btn  btn-primary   "
+                    href="<?=base_url('Login/password_recover')?>">SIGN IN</a> -->
+                    <button type="submit" class="btn btn-primary btn-block">SIGN IN</button>
 
-      <form action="<?= base_url('Login/do_login') ?>" method="POST">
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Email" name="USERNAME">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+                </div>
+                <!-- <div class="my-2 d-flex justify-content-between align-items-center">
+                  <div class="form-check">
+                    <label class="form-check-label text-muted">
+                      <input type="checkbox" class="form-check-input">
+                      Keep me signed in
+                    </label>
+                  </div>
+                  <a href="#" class="auth-link text-black">Forgot password?</a>
+                </div>
+                <div class="mb-2">
+                  <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                    <i class="ti-facebook me-2"></i>Connect using facebook
+                  </button>
+                </div>
+                <div class="text-center mt-4 fw-light">
+                  Don't have an account? <a href="register.html" class="text-primary">Create</a>
+                </div> -->
+              </form>
             </div>
           </div>
         </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" name="PASSWORD">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- <div class="col-7"> -->
-            <!-- <a href="<?php echo base_url('Login/password_recover')?>" class="text-success">Mot de passe oubli&eacute;?</a> -->
-            
-          <!-- </div> -->
-          <!-- /.col -->
-          <div class="col-12">
-            <button type="submit" class="btn btn-success btn-block">Se connecter</button>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
-
-    
-      <!-- /.social-auth-links -->
-
-      <!-- <p class="mb-1">
-        <a href="forgot-password.html" class="text-primary">I forgot my password</a>
-      </p> -->
+      </div>
+      <!-- content-wrapper ends -->
     </div>
-    <!-- /.card-body -->
+    <!-- page-body-wrapper ends -->
   </div>
-  <!-- /.card -->
-</div>
-<!-- /.login-box -->
-
-<!-- jQuery -->
-
-<?php
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <?php
   include VIEWPATH.'includes/new_script.php';
   ?>
-
+  <!-- endinject -->
 </body>
+
 </html>

@@ -27,8 +27,9 @@ $config['modules_locations'] = array(APPPATH.'modules/'=>'../modules/');
 | a PHP script and you can easily do that on your own.
 |
 */
- // $config['base_url'] = 'http://localhost/app/';
- $config['base_url'] = 'http://192.168.8.200/app/';
+ $config['base_url'] = 'http://localhost/pnseb/';
+ $config['log_threshold'] = 1;
+ // $config['base_url'] = 'http://192.168.8.200/app/';
 //$config['base_url'] = 'https://www.pharmaciesaintraphael.com/app/';
 
 /*

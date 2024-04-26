@@ -15,7 +15,7 @@
     // include 'includes/menu_client.php';
     ?>
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid" style="padding-top: 20px">
@@ -23,7 +23,7 @@
           <div class="col-12">
             <div class="card card-success">
               <div class="card-header">
-                <h3 class="card-title">Liste Des Client</h3>
+                <h3 class="card-title">Les ventes</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -46,6 +46,8 @@
                     </div>
                   </div>
                 </form>
+
+                <button id="export" class="btn btn-success" >Export Excel</button>
 
 
                 <table id="example1" class="table table-bordered table-striped table-hover">
@@ -112,24 +114,24 @@
     dom: 'Bfrtlip',
          buttons: [
                 
-                {extend: 'excel', title: 'Envoi OBR',exportOptions: {
-   columns: ':visible:not(:eq(7))' 
-},
-            blengthChange: false,
-            responsive: true,
-            // Declare the use of the extension in the dom parameter
-            dom: 'lBfrtip',
-            paging: false
-  },
-                {extend: 'pdf', title: 'Envoi OBR',exportOptions: {
-   columns: ':visible:not(:eq(7))' 
-},
-            blengthChange: false,
-            responsive: true,
-            // Declare the use of the extension in the dom parameter
-            dom: 'lBfrtip',
-            paging: false
-  }
+//                 {extend: 'excel', title: 'Envoi OBR',exportOptions: {
+//    columns: ':visible:not(:eq(10))' 
+// },
+//             blengthChange: false,
+//             responsive: true,
+//             // Declare the use of the extension in the dom parameter
+//             dom: 'lBfrtip',
+//             paging: false
+//   },
+//                 {extend: 'pdf', title: 'Envoi OBR',exportOptions: {
+//    columns: ':visible:not(:eq(10))' 
+// },
+//             blengthChange: false,
+//             responsive: true,
+//             // Declare the use of the extension in the dom parameter
+//             dom: 'lBfrtip',
+//             paging: false
+// }
         ],
         "processing":true,
         responsive: true,
@@ -189,6 +191,39 @@ if($('#DATE').val()&&$('#DATE1').val())
 window.location.replace("<?=base_url()?>OBR/list_OBR/"+$('#DATE').val()+"/"+$('#DATE1').val());
 
     }
+</script>
+
+<script type="text/javascript">
+  
+  // function exportert(){
+   $('#export').click(function(){
+    // alert();
+    $.ajax({
+                  url:"http://192.168.8.200:82/routes.mobile/export",
+                  method:"POST",
+                  //async:false,
+                  data: {DT1:"<?=$dt?>",DT2:"<?=$date2?>"},
+                                                                       
+                  success:function(data)
+                                      {  
+                                          // alert(data);
+                                        var nom="Les vente du <?=$dt?> au <?=$date2?>.xlsx"
+                                        var nom1=nom.replaceAll(':','')
+                                        var nom2=nom1.replaceAll(' ','_')
+                                        const link = document.createElement('a');
+                                        link.setAttribute('target', '_blank');
+                                        link.setAttribute('href', 'http://192.168.8.200:82/export/'+nom2);
+                                        link.setAttribute('download', nom2);
+                                        document.body.appendChild(link);
+                                        link.click();
+                                        link.remove();
+
+                                        
+                                                                                      
+                                       }
+                });
+  // }
+  })
 </script>
 
 </body>

@@ -1,0 +1,490 @@
+<?php
+  include VIEWPATH.'includes/new_header.php';
+  ?>
+  
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <?php
+  include VIEWPATH.'includes/new_top_menu.php';
+  include VIEWPATH.'includes/new_menu_principal.php';
+  ?>
+
+   
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <?php 
+    include 'includes/menu_facture.php';
+    ?>
+
+    <section class="content">
+
+      <div class="card">
+      <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Enregistrement Facture</h3>
+              </div>
+       <form role="form" id="formvente" action="<?=base_url()?>facturer/Facture/save_facture" enctype="multipart/form-data" method="POST">
+                <div class="card-body ">
+                  <div class="row">
+                   <div class="form-group col-md-3">
+                        <label for="DATE_FACTURE">
+                          Date de facture 
+                          <i class="text-danger"> *</i>
+                        </label>
+                    <input type="date" class="form-control" value="<?php echo date('Y-m-d')?>" name="DATE_FACTURE" id="DATE_FACTURE" value="<?=$info['DATE_FACTURE']?>">
+                        <?php echo form_error('DATE_FACTURE', '<div class="text-danger">', '</div>'); ?>
+                     </div>
+
+                     <div class="form-group col-md-3">
+                        <label for="ID_CLIENT">
+                          Client
+                          <i class="text-danger"> *</i>
+                        </label>
+                  <select class="form-control select select2-primary" data-dropdown-css-class="select2-primary" name="ID_CLIENT" id="ID_CLIENT" style="width: 100%;">
+                    <option value=""> </option>
+                    <?php
+                          foreach ($categ as $key) {
+                            ?>
+                           <option value='<?=$key['ID_CLIENT']?>' <?php if($info['NUMERO_FACTURE']==$key['ID_CLIENT'])echo 'selected';?>><?=$key['RAISON']?></option>;
+                           <?php
+                          }
+                          ?>
+                  </select>
+                        <?php echo form_error('ID_CLIENT', '<div class="text-danger">', '</div>'); ?>
+                     </div>
+
+                     <div class="form-group col-md-3">
+                        <label for="NUMERO_FACTURE">
+                          Nr de Facture
+                          <i class="text-danger"> *</i>
+                        </label>
+                        <input type="text" name="NUMERO_FACTURE" class="form-control" value="<?=$info['NUMERO_FACTURE']?>">
+                        <?php echo form_error('NUMERO_FACTURE', '<div class="text-danger">', '</div>'); ?>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label for="ID_CLIENT">
+                          Envoie Automatique
+                          <i class="text-danger"> *</i>
+                        </label>
+                  <select class="form-control select select2-primary" data-dropdown-css-class="select2-primary" name="AUTO_SEND" id="AUTO_SEND" style="width: 100%;">
+                    <option value="0">NON </option>
+                    <option value="1" selected>OUI </option>
+                    
+                  </select>
+                        
+                     </div>
+                  </div>
+
+
+
+                  <div class="row">
+
+<div class="form-group col-md-2">
+  <label for="SELECT_OPTION">
+    Choisir l'option:
+    <i class="text-danger"> *</i>
+  </label>
+<select class="form-control select select2-primary" data-dropdown-css-class="select2-primary" name="SELECT_OPTION" id="SELECT_OPTION_ID" style="width: 100%;">
+<option value=""></option>
+<option value="1">Vente Produit</option>
+<option value="2">Service</option>
+</select>
+</div>
+
+
+
+<div class="form-group col-md-2" id="PRODUIT_ID">
+  <label for="ID_PRODUIT">
+    Produit
+   <i class="text-danger"> *</i>
+  </label>
+<select class="form-control select select2-primary" data-dropdown-css-class="select2-primary" name="ID_PRODUIT" id="ID_PRODUIT" style="width: 100%;">
+<option value=""> </option>
+  <?php
+   foreach ($prods as $key) {
+    ?>
+<option value='<?=$key['ID_PRODUIT']?>'><?=$key['NOM_PRODUIT']?></option>;
+  <?php
+   }
+  ?>
+</select>
+  <?php echo form_error('ID_PRODUIT', '<div class="text-danger">', '</div>'); ?>
+</div>
+                 
+                     <div class="col-md-3" id="DESIGNATION_ID">
+
+                      <label for="DESIGNATION">Designation</label> 
+                        <textarea name="DESIGNATION" id="DESIGNATION" class="form-control "></textarea>
+                        
+                        <?php echo form_error('DESIGNATION', '<div class="text-danger">', '</div>'); ?>
+                     </div> 
+
+                     <div class="form-group col-md-2">
+                        <label for="PU">
+                          Prix Unitaire
+                          <i class="text-danger"> *</i>
+                        </label>
+                        <input type="number" name="PU" value="" class="form-control" id="PU" step="0.001" >
+                        <?php echo form_error('PU', '<div class="text-danger">', '</div>'); ?>
+                     </div>
+
+                     <div class="form-group col-md-2">
+                        <label for="QT">
+                          Quantite
+                          <i class="text-danger"> *</i>
+                        </label>
+                        <input type="number" name="QT" value="" class="form-control" id="QT" step="0.001">
+                        <?php echo form_error('QT', '<div class="text-danger">', '</div>'); ?>
+                     </div>
+                     
+
+
+                     <div class="form-group col-md-2">
+                        <label for="PT">
+                          Prix Total 
+                          <i class="text-danger"> *</i>
+                        </label>
+                        <input type="number" name="PT" value="" class="form-control" id="PT" step="0.001" readonly>
+                        <?php echo form_error('PT', '<div class="text-danger">', '</div>'); ?>
+                     </div>
+                     <div class="form-group col-md-1">
+                        <label for="" style="color:white;"> . </label>
+                        <a  class="btn btn-primary btn-block" id="plus">+</a>
+                     </div>
+                    <div class="row col-md-12" style="margin-top:20px">
+                      <div id="table_items" class="col-md-12">
+                        <?php
+                          $table="<table class='table table-bordered table-striped' style='width:100%'>
+                                <tr>
+                                        <th>DESIGNATION</th>
+                                        <th>PRIX UNITAIRE</th>
+                                        <th>QUANTITE</th>
+                                        <th>PRIX TOTAL</th>
+                                        <th></th>
+                                      </tr>";
+
+                                foreach ($this->cart->contents() as $infos){
+
+                          $table.="<tr><td>".$infos['design']."</td><td>".$infos['price']."</td><td>".$infos['qty']."</td><td>".$infos['tot']."</td><td><a class='btn btn-danger delete' id='".$infos['rowid']."'   role='button'><i class='fa fa-minus-circle' aria-hidden='true'></i> Enlever </a></td'</tr>";
+
+                                }
+
+                                $table.="<tr><td colspan='3'>MONTANT HTVA</td><td>".$this->cart->total()."</td><td></td'</tr>";
+                                $tva=$this->cart->total()*18/100;
+                                $tvac=$this->cart->total()+$tva;
+
+                                $table.="<tr><td colspan='3'>TVA</td><td>".$tva."</td><td></td'</tr>";
+                                $table.="<tr><td colspan='3'>MONATANT TVAC</td><td>".$tvac."</td><td></td'</tr>";
+
+                                $table.="</table>";
+
+                                echo $table;
+                        ?>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="PU">
+                          MONTANT EN LETTRE
+                          <i class="text-danger"> *</i>
+                        </label>
+                        <textarea name="MONTANT_LETTRE" class="form-control"><?=$info['MONTANT_LETTRE']?></textarea>
+                        <?php echo form_error('MONTANT_LETTRE', '<div class="text-danger">', '</div>'); ?>
+                     </div>
+                     <div class="form-group col-md-6">
+                        <label for="QT">
+                          QUI SIGNE?
+                          <i class="text-danger"> *</i>
+                        </label>
+                        <input type="text" name="QUI_SIGNE" value="" class="form-control" id="QUI_SIGNE" step="0.001" value="<?=$info['QUI_SIGNE']?>">
+                        <?php echo form_error('QUI_SIGNE', '<div class="text-danger">', '</div>'); ?>
+                     </div>
+                     <div class="form-group col-md-6">
+                        <label for="QT">
+                          SON TITRE?
+                          <i class="text-danger"> *</i>
+                        </label>
+                        <input type="text" name="SON_TITRE" value="" class="form-control" id="SON_TITRE" step="0.001" value="<?=$info['SON_TITRE']?>">
+                        <?php echo form_error('SON_TITRE', '<div class="text-danger">', '</div>'); ?>
+                     </div>
+                    <div class="card-footer col-md-12">
+                      <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+                    </div>
+
+               <!--  <div class="card-footer col-md-12">
+                  <span id="load1" class="loader1"></span>
+                  <button type="button" id="submit_vente" class="btn btn-primary btn-block" onclick="submitvente()">Enregistrer</button>
+                </div> -->
+                </div>
+                
+<?php
+ include VIEWPATH.'includes/new_copy_footer.php';  
+  ?>
+</body>
+ 
+  <?php
+  include VIEWPATH.'includes/new_script.php';
+  ?>
+</html>
+<script>
+  $("#PRODUIT_ID").hide();
+  $("#DESIGNATION_ID").hide();
+
+  $("#SELECT_OPTION_ID").on('change',function(){
+    var SELECT_OPTION = $('#SELECT_OPTION_ID').val();
+    var ID_PRODUIT = $('#ID_PRODUIT').val();
+    var DESIGNATION = $('#DESIGNATION').val();
+
+    // alert(ID_PRODUIT);
+
+  if(SELECT_OPTION == 0){
+    $("#PRODUIT_ID").hide();
+    $("#DESIGNATION_ID").hide();
+  }
+  if(SELECT_OPTION == 1){
+    $("#PRODUIT_ID").show();
+    $("#DESIGNATION_ID").hide();
+  }
+  if(SELECT_OPTION == 2){
+    $("#PRODUIT_ID").hide();
+    $("#DESIGNATION_ID").show();
+  }
+
+})
+</script>
+<script type="text/javascript">
+
+  $(document).on('keyup','#PU',function(event){
+    // alert();
+    var PU=$("#PU").val();
+    var QT=$("#QT").val();
+
+    var tot=PU*QT;
+    $("#PT").val(tot);
+
+  })
+  $(document).on('keyup','#QT',function(event){
+    var PU=$("#PU").val();
+    var QT=$("#QT").val();
+
+    var tot=PU*QT;
+    $("#PT").val(tot);
+
+  })
+</script>
+
+<script type="text/javascript">
+  $('#reservation').daterangepicker({
+
+  locale: {
+    format: 'DD/MM/YYYY'
+  }
+})
+$('.select').select2();
+</script>
+<script type="text/javascript">
+  $(document).on('click','#plus',function(event){
+var ID_CLIENT=$("#ID_CLIENT").val();
+var DESIGNATION=$("#DESIGNATION").val();
+var ID_PRODUIT=$("#ID_PRODUIT").val();
+var PU=$("#PU").val();
+var QT=$("#QT").val();
+var PT=$("#PT").val();
+var SELECT_OPTION=$("#SELECT_OPTION_ID").val();
+var i=0;
+
+// console.log(ID_CLIENT);
+
+if(SELECT_OPTION == 0){
+
+if(!ID_CLIENT){
+  alert("VEULLEZ ENTRER LE CLIENT");
+  $("#ID_CLIENT").focus();
+  return;
+  i=1;
+}
+if(!SELECT_OPTION){
+  alert("VEULLEZ SELECTIONER L'OPTION D'ABORD");
+  $("#SELECT_OPTION_ID").focus();
+  return;
+  i=1;
+}
+if(!PU){
+  alert("VEULLEZ ENTRER LE PRIX UNITAIRE");
+   $("#PU").focus();
+  return;
+  i=1;
+}
+if(!QT){
+  alert("VEULLEZ ENTRER LA QUANTITE");
+   $("#QT").focus();
+  return;
+  i=1;
+}
+}
+
+
+if(SELECT_OPTION == 1){
+
+if(!ID_CLIENT){
+  alert("VEULLEZ ENTRER LE CLIENT");
+  $("#ID_CLIENT").focus();
+  return;
+  i=1;
+}
+if(!ID_PRODUIT){
+  alert("VEULLEZ ENTRER LE PRODUIT");
+  $("#ID_PRODUIT").focus();
+  return;
+  i=1;
+}
+if(!PU){
+  alert("VEULLEZ ENTRER LE PRIX UNITAIRE");
+   $("#PU").focus();
+  return;
+  i=1;
+}
+if(!QT){
+  alert("VEULLEZ ENTRER LA QUANTITE");
+   $("#QT").focus();
+  return;
+  i=1;
+}
+}
+
+
+if(SELECT_OPTION == 2){
+
+if(!ID_CLIENT){
+  alert("VEULLEZ ENTRER LE CLIENT");
+  $("#ID_CLIENT").focus();
+  return;
+  i=1;
+}
+if(!DESIGNATION){
+  alert("VEULLEZ ENTRER LA DESIGNATION");
+  $("#DESIGNATION").focus();
+  return;
+  i=1;
+}
+if(!PU){
+  alert("VEULLEZ ENTRER LE PRIX UNITAIRE");
+   $("#PU").focus();
+  return;
+  i=1;
+}
+if(!QT){
+  alert("VEULLEZ ENTRER LA QUANTITE");
+   $("#QT").focus();
+  return;
+  i=1;
+}
+} 
+
+
+if(i==0){
+alert("yes");
+
+      $.ajax({
+              url:"<?php echo base_url() ?>facturer/Facture_cart/insert_cart",
+              method:"POST",
+           // async:false,
+              data: {ID_PRODUIT:ID_PRODUIT,DESIGN:DESIGNATION,PRICE:PU,QTY:QT,TOT:PT},
+                                                                   
+              success:function(stutus)
+                                      {
+                                        $("#load").hide();
+                                        $("#table_items").html(stutus);
+                                        if(stutus!="<div class='alert alert-danger'>ECHEC! VERIFIER BIEN LES QUATITES ET LES MONTANTS</div>"){
+                                          
+                                          $("#ID_PRODUIT").val('');
+                                          $("#DESIGNATION").val('');
+                                          $("#PU").val('');
+                                          $("#QT").val('');
+                                          $("#PT").val('');
+
+                                        }
+                                          
+                                        
+                                      }
+
+      });}
+});
+</script>
+<script type="text/javascript">
+  $(document).on('click','.delete',function(event){
+var id=$(this).attr("id");
+$.ajax({
+              url:"<?php echo base_url() ?>facturer/Facture_cart/delete_item",
+              method:"POST",
+           // async:false,
+              data: {ID_CLIENT:id},
+                                                                   
+              success:function(stutus)
+                                      { 
+                                       
+                                        $("#load").hide();
+                                        $("#table_items").html(stutus);
+                                          $("#ID_PRODUIT").val('');
+                                          $("#DESIGNATION").val('');
+                                          $("#PU").val('');
+                                          $("#QT").val('');
+                                          $("#PT").val('');
+                                        
+                                      }
+
+      });
+  })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<script type="text/javascript">
+  function submitvente()getElementById {
+    document.("submit_vente").disabled=true;
+    $("#load1").show();
+    var DATE_FACTURE= $('#DATE_FACTURE').val();
+    var ID= $('#ID').val();
+
+    var NUMERO_FACTURE= $('#NUMERO_FACTURE').val();
+    var DESIGNATION= $('#DESIGNATION').val();
+    var PU= $('#PU').val();
+    var QT= $('#QT').val();
+    var PT= $('#PT').val();
+      
+  $.ajax({
+
+                            url:"<?php echo base_url() ?>facturer/Facture_cart/save_vente",
+                            method:"POST",
+                            data: {DATE_FACTURE:DATE_FACTURE,ID:ID,NUMERO_FACTURE:NUMERO_FACTURE,DESIGNATION:DESIGNATION,PU:PU,QT:QT,PT:PT},
+                                                                                 
+                            success:function(stutus)
+                                                    { 
+                                                     
+  $("#load1").hide();
+                                                      var resp=stutus.split("|");
+
+                                                      $("#DESIGNATION").val(0);
+                                                      $("#PU").val(0);
+                                                      $("#QT").val(0);
+                                                      $("#PT").val(0);
+                                                    }
+        
+                        });
+     
+  }
+</script>
+ -->
+

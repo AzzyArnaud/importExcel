@@ -8,7 +8,7 @@ class Profil_Droit  extends CI_Controller{
 
       public function Is_Connected()
        {
-       if (empty($this->session->userdata('STRAPH_ID_USER')))
+       if (empty($this->session->userdata('STRAPH1_ID_USER')))
         {
          redirect(base_url('Login/'));
         }
@@ -46,7 +46,7 @@ class Profil_Droit  extends CI_Controller{
                             Profil est droit non enregistr&eacute; de cong&eacute; non enregistr&eacute;
                             <button type='button' class='close' data-dismiss='alert'>&times;</button>
                       </div>";
-    $this->session->set_flashdata(array('message'=>$message));
+    // $this->session->set_flashdata(array('message'=>$message));
     $data['title']='Profil & Droit';
     $data['droits']=$this->Model->getRequete('SELECT * FROM `config_droits` order by DESCRIPTION');
   $this->load->view('Profil_Droit_Add_View',$data);
@@ -119,7 +119,7 @@ class Profil_Droit  extends CI_Controller{
       $PROFIL_ID=$this->input->post('PROFIL_ID');
     
       // $this->form_validation->set_rules('ID_DROIT', 'Profil', 'required');
-      $this->form_validation->set_rules('DESCRIPTION', 'Description', 'required');
+      $this->form_validation->set_rules('DESCRIPTION', '', 'required',array('required'=>'le champs  est  obligatoire!!'));
     
        if ($this->form_validation->run() == FALSE){
         $message = "<div class='alert alert-danger'>

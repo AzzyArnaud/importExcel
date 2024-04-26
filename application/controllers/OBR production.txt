@@ -1,0 +1,14 @@
+Bonjour, 
+Veuillez utiliser les informations suivantes pour se connecter à notre système eBMS production en tant que:
+
+1. PHARMACIE ST RAPHAEL
+ - nom d'utilisateur: wsl400042558900278
+ - mot de passe: 0$ffCNx4
+
+Les URL du système eBMS  à prendre en considération sont: 
+
+      -https://ebms.obr.gov.bi:8443/ebms_api/login/
+     - https://ebms.obr.gov.bi:8443/ebms_api/getInvoice/
+     - https://ebms.obr.gov.bi:8443/ebms_api/addInvoice/
+     - https://ebms.obr.gov.bi:8443/ebms_api/checkTIN/
+     - https://ebms.obr.gov.bi:8443/ebms_api/cancelInvoice/

@@ -1,66 +1,60 @@
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bbootstrap 4 -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/jqvmap/jqvmap.min.css">
-  <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/daterangepicker/daterangepicker.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/summernote/summernote-bs4.css">
-  <!-- Google Font: Source Sans Pro -->
-<!-- DataTables -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-
-
-
-  <!-- Bootstrap4 Duallistbox -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-
-<!-- <script src="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"> </script> -->
-<!-- <script src="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css"> </script> -->
-
-
-<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"> -->
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
-
-
-
-
-  <!-- Select2 -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="<?php echo base_url() ?>plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-
-
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo base_url() ?>dist/css/adminlte.min.css">
-
-
-
-
-
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
-
-   <!-- datepicker -->
-  <link href="<?php echo base_url() ?>vendor/datepicker/css/datepicker.css" rel="stylesheet">
-  <link href="<?php echo base_url() ?>vendor/datepicker/css/jquery.datetimepicker.min.css" rel="stylesheet">
-
-
-
-
-
-<title>Pearl Hotel - <?=$title?></title>
-
-
+<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start bg-dark text-light">
+    <div class="me-3">
+      <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+        <span class="icon-menu"></span>
+      </button>
+    </div>
+    <div>
+      <a class="navbar-brand brand-logo" href="<?=base_url();?>">
+        <img src="<?=base_url();?>assets/images/invest_logo.png" alt="logo" />
+      </a>
+      <!-- <a class="navbar-brand brand-logo-mini" href="<=base_url();?>index.html">
+        <img src="<?=base_url();?>assets/images/invest_logo.png" alt="logo" />
+      </a> -->
+    </div>
+  </div>
+  <div class="navbar-menu-wrapper d-flex align-items-top">
+    <ul class="navbar-nav">
+      <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+        <h3 class="">Welcome, <span class="text-black fw-bold"><?=  $this->session->userdata('STRAPH1_NOM'). " " . $this->session->userdata('STRAPH1_PRENOM');?></span></h3>
+        
+      </li>
+    </ul>
+    <ul class="navbar-nav ms-auto">
+      
+    <li class="nav-item d-none d-lg-block">
+        <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
+          <span class="input-group-addon input-group-prepend border-right">
+            <span class="icon-calendar input-group-text calendar-icon"></span>
+          </span>
+          <input type="text" class="form-control">
+        </div>
+      </li>
+      
+      <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+        <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+          <img class="img-xs rounded-circle" src="<?=base_url();?>assets/images/icons.png" alt="Profile image"> </a>
+        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+          <div class="dropdown-header text-center">
+            <img class="img-xs rounded-circle" src="<?=base_url();?>assets/images/icons.png" alt="Profile image">
+            <p class="mb-1 mt-3 font-weight-semibold">
+              <?= $this->session->userdata('STRAPH1_NOM')?>
+            </p>
+            <p class="fw-light text-muted mb-0">
+              <?= $this->session->userdata('STRAPH1_USERNAME')?>
+            </p>
+          </div>
+          <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My
+            Profile </a>
+          
+          <a href="<?=base_url()?>Login/do_logout" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+        </div>
+      </li>
+    </ul>
+    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+      data-bs-toggle="offcanvas">
+      <span class="mdi mdi-menu"></span>
+    </button>
+  </div>
+</nav>

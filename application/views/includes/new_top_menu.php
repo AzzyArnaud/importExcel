@@ -75,34 +75,6 @@ if ($this->session->userdata('tot')>0) {
 
       ?>
 
-      <?php
-$commande_nontraite = $this->Model->getRequeteOne('SELECT COUNT(ID_COMMANDE) AS nontraite FROM commandes WHERE STATUT=0');
-
-$commande_nontrouve = $this->Model->getRequeteOne('SELECT COUNT(ID_COMMANDE) AS nontrouve FROM commandes WHERE STATUT=2');
-
-$commande_tot = $commande_nontraite['nontraite'] + $commande_nontrouve['nontrouve'];
-
-?>
-
-<li class="nav-item dropdown blink" style="width: ">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge" style="color: green"><?=$commande_tot;?></span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header"> <?=$commande_nontraite['nontraite']?> Notifications</span>
-          
-          <div class="dropdown-divider"></div>
-          <a href="<?=base_url()?>commandes/Commande/commande_non_traite" class="dropdown-item" style="color: red">
-            <i class="nav-icon fas fa-gifts"></i> <?=$commande_nontraite['nontraite']?> Commandes non traitées
-          </a>
-          <a href="<?=base_url()?>commandes/Commande/personne_non_trouve" class="dropdown-item" style="color: green">
-            <i class="nav-icon fas fa-gifts"></i> <?=$commande_nontrouve['nontrouve']?> personnes non trouvées
-          </a>
-        </div>
-      </li>
-&nbsp;&nbsp;
-
       <li class="nav-item dropdown blink" style="width: ">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>

@@ -22,7 +22,7 @@
       <div class="card">
 
       <div class="card card-success">
-              <div class="card-header">
+              <div class="card-header ">
                 <h3 class="card-title">Nouveau Profil</h3>
               </div>
               <!-- /.card-header -->

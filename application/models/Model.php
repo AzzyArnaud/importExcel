@@ -2182,10 +2182,10 @@ return $query->result_array();
          
        }
 
-      function truncate($requete){
-      $query=$this->db->query($requete);
-      
+    function truncate($requete) {
+$query=$this->db->query($requete);
+      if ($query) {
          return true;
-      
+      }
     }
 }

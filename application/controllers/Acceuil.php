@@ -6,7 +6,7 @@ class Acceuil extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->Is_Connected();
+        // $this->Is_Connected();
     }
 
     public function Is_Connected()
@@ -27,7 +27,16 @@ class Acceuil extends CI_Controller {
     }
 
 
+public function index1()
+    {
 
+        if(isset($_POST)){
+            print_r($_POST);
+            echo "xxx1";
+        }
+
+
+    }
 
 }
 ?>

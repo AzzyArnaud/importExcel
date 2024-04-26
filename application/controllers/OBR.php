@@ -67,7 +67,8 @@ class OBR extends CI_Controller
     // $getInvoice=$this->Model->getRequete("SELECT `ID`, `DATE`, `NUMERO_ABONE`, `NOM`, `ADRESSE`, `NIF`, `CATEGORIE`, `NUMERO_FACTURE`, `MONTANT_HT`, `MONTANT_TVA`, `MONTANT_TTC`, `COMMENTAIRE`, `STATUT` FROM `facture` WHERE STATUT=0");
 
 // $getInvoice=$this->Model->getRequete("SELECT* FROM vente_vente vv left join saisie_client sc on vv.ID_CLIENT=sc.ID_CLIENT where  vv.DATE_TIME_VENTE> '2023-03-06' and (select count(ID_VENTE_DETAIL) from vente_detail where ID_VENTE=vv.ID_VENTE and ID_BARCODE not in(select ID_BARCODE from req_barcode where HAVE_FACTURE=0) and ID_PRODUIT not in(select ID_PRODUIT from saisie_produit where AGREE_LOCAL=0))>0 and SIGNATURE_FACTURE=0 limit 500");
-$getInvoice=$this->Model->getRequete("SELECT* FROM vente_vente vv left join saisie_client sc on vv.ID_CLIENT=sc.ID_CLIENT where  vv.DATE_TIME_VENTE>'2023-04-03 00:00:00' and SIGNATURE_FACTURE=0 limit 500");
+// $getInvoice=$this->Model->getRequete("SELECT* FROM vente_vente vv left join saisie_client sc on vv.ID_CLIENT=sc.ID_CLIENT where  vv.DATE_TIME_VENTE>'2023-04-03 00:00:00' and SIGNATURE_FACTURE=0 limit 500");
+$getInvoice=$this->Model->getRequete("SELECT* FROM vente_vente vv left join saisie_client sc on vv.ID_CLIENT=sc.ID_CLIENT where CONCAT(ID_VENTE) = '30018.1' and vv.DATE_TIME_VENTE>'2023-04-03 00:00:00' and SIGNATURE_FACTURE=0 limit 500");
 
 // print_r($getInvoice);exit();
 
@@ -120,7 +121,7 @@ $OBR_NUM=$value['ID_VENTE'];
         $facture["customer_TIN"]= $value['NIF_CLIENT'];
         $facture["customer_address"]= '';
         $facture["vat_customer_payer"]= "";
-        $facture["cancelled_invoice_ref"]= "";
+        $facture["cancelled_invoice_ref"]= "30018";
         $facture["Invoice_ref"]= $OBR_NUM;
         $facture["cn_motif"]= "";
         $facture["invoice_signature"]= $invoice_signature;
@@ -642,7 +643,7 @@ $i++;
       CURLOPT_CUSTOMREQUEST => 'POST',
       CURLOPT_POSTFIELDS =>'{
         "invoice_signature":"'.$cancel['SIGNATURE_FACTURE'].'",
-        "cn_motif" : "Erreur sur la réduction"
+        "cn_motif" : "Erreur sur la quantité de certainns produits"
 
 
       }',
@@ -668,8 +669,8 @@ $i++;
   }
 
 public function list_OBR($dt=NULL,$dt1=NULL){
-$data['dt']=$dt;
-$data['date2']=$dt1;
+$data['dt']=$dt?$dt:date("Y-m-d");
+$data['date2']=$dt1?$dt1:date("Y-m-d");
 $data['']='';
 
     $this->load->view("list_OBR_view",$data);
@@ -693,8 +694,11 @@ if($this->input->post("DT1")&&$this->input->post("DT2")){
 $i = 1;
             // $query_principal = 'SELECT* FROM vente_vente vv left join saisie_client sc on vv.ID_CLIENT=sc.ID_CLIENT where (select count(ID_VENTE_DETAIL) from vente_detail where ID_VENTE=vv.ID_VENTE and ID_BARCODE not in(select ID_BARCODE from req_barcode where HAVE_FACTURE=0) and ID_PRODUIT not in(select ID_PRODUIT from saisie_produit where AGREE_LOCAL=0))>0 and '.$filtre_Date;
 // $gen=$this->Model->getRequeteOne("SELECT SUM(PRIX_UNITAIRE) as n from vente_detail where ID_VENTE>0 and DATE_TIME>'2023-04-03 00:00:00' ".$filtre_Date_sum);
-$gen=$this->Model->getRequeteOne("SELECT sum(`PRIX_UNITAIRE`-IFNULL((`PRIX_UNITAIRE`*(SELECT max(POURCENTAGE_REMISE) from vente_remise where ID_VENTE=vd.ID_VENTE and ID_ASSURANCE is null))/100,0)-IFNULL((`PRIX_UNITAIRE`*(SELECT max(POURCENTAGE_REMISE) from vente_remise where ID_VENTE=vd.ID_VENTE and ID_ASSURANCE is not null))/100,0)) as n,(SELECT max(POURCENTAGE_REMISE) from vente_remise where ID_VENTE=vd.ID_VENTE) as m from vente_detail vd where ID_VENTE>0 and DATE_TIME>'2023-04-03 00:00:00'".$filtre_Date_sum);
+$gen=$this->Model->getRequeteOne("SELECT sum(`PRIX_UNITAIRE`-IFNULL((`PRIX_UNITAIRE`*(SELECT max(POURCENTAGE_REMISE) from vente_remise where ID_VENTE=vd.ID_VENTE and ID_ASSURANCE is null))/100,0)-IFNULL((`PRIX_UNITAIRE`*(SELECT max(POURCENTAGE_REMISE) from vente_remise where ID_VENTE=vd.ID_VENTE and ID_ASSURANCE is not null))/100,0)) as n,(SELECT max(POURCENTAGE_REMISE) from vente_remise where ID_VENTE=vd.ID_VENTE) as m from vente_detail vd where OBR_DELETED=0 and ID_VENTE>0 and DATE_TIME>'2023-04-03 00:00:00'".$filtre_Date_sum);
 $env=$this->Model->getRequeteOne("SELECT SUM(DECLA_PRIX) as n from vente_detail where ID_VENTE>0 and DATE_TIME>'2023-04-03 00:00:00' ".$filtre_Date_sum);
+
+// $gen_annuler=$this->Model->getRequeteOne("SELECT sum(`PRIX_UNITAIRE`-IFNULL((`PRIX_UNITAIRE`*(SELECT max(POURCENTAGE_REMISE) from vente_remise where ID_VENTE=vd.ID_VENTE and ID_ASSURANCE is null))/100,0)-IFNULL((`PRIX_UNITAIRE`*(SELECT max(POURCENTAGE_REMISE) from vente_remise where ID_VENTE=vd.ID_VENTE and ID_ASSURANCE is not null))/100,0)) as n,(SELECT max(POURCENTAGE_REMISE) from vente_remise where ID_VENTE=vd.ID_VENTE) as m from vente_detail vd where OBR_DELETED>0 ID_VENTE>0 and DATE_TIME>'2023-04-03 00:00:00'".$filtre_Date_sum);
+$env=$this->Model->getRequeteOne("SELECT SUM(DECLA_PRIX) as n from vente_detail where OBR_DELETED=0 and ID_VENTE>0 and DATE_TIME>'2023-04-03 00:00:00' ".$filtre_Date_sum);
 
 $query_principal = "SELECT vv.*,sc.*,vr.ID_ASSURANCE,NOM_ASSURANCE,POURCENTAGE_REMISE FROM vente_vente vv left join saisie_client sc on vv.ID_CLIENT=sc.ID_CLIENT left join vente_remise vr on vv.ID_VENTE=vr.ID_VENTE left join saisie_assurance ass on vr.ID_ASSURANCE=ass.ID_ASSURANCE where DATE_TIME_ENVOI_OBR>'2023-04-03 00:00:00' and ".$filtre_Date;
 
@@ -806,8 +810,8 @@ $query_principal = "SELECT vv.*,sc.*,vr.ID_ASSURANCE,NOM_ASSURANCE,POURCENTAGE_R
         "recordsTotal" => $this->Model->all_data($query_principal),
         "recordsFiltered" => $this->Model->filtrer($query_filter),
         "data" => $data,
-        "general"=>$gen['n'],
-        "envoi"=>$env['n']
+        "general"=>number_format($gen['n'],3,',',' '),
+        "envoi"=>number_format($env['n'],0,',',' ')
     );
     echo json_encode($output);
 }

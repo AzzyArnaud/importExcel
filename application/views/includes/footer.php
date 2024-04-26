@@ -1,10 +1,10 @@
-<footer class="main-footer">
-    <strong>Copyright &copy; 2020-<?=date('Y')?> <a href="#">Prime Entreprises</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.0.0
-    </div>
-  </footer>
+<footer class="footer" style="position:fixed;buttom:0">
+<div class="d-sm-flex justify-content-center justify-content-sm-between">
+<span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a
+href="#" target="_blank">pnseb</a> from Burundi.</span>
+<span class="float-none float-sm-end d-block mt-1 mt-sm-0 text-center">Copyright © 2024. All rights reserved.</span>
+</div>
+</footer>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -105,7 +105,6 @@
 <script src="<?php echo base_url() ?>plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url() ?>dist/js/adminlte.min.js"></script>
-
 
 
 

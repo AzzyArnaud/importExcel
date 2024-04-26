@@ -1,30 +1,54 @@
 <?php
   include VIEWPATH.'includes/new_header.php';
   ?>
-  
-<!-- Site wrapper -->
-<div class="wrapper">
+
+
+<body class="with-welcome-text">
+  <div class="container-scroller">
+
   <?php
-  include VIEWPATH.'includes/new_top_menu.php';
-  include VIEWPATH.'includes/new_menu_principal.php';
+    include VIEWPATH.'includes/header.php';
   ?>
 
-  
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <?php 
-    include 'includes/menu_user.php';
+    <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    
+    <?php
+      include VIEWPATH.'includes/setting_color.php';
     ?>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
 
-    <!-- Main content -->
-    <section class="content">
 
-      <!-- Default box -->
-      <div class="card">
-
-      <div class="card card-success">
+    <?php
+      include VIEWPATH.'includes/new_menu_principal.php';
+    ?>
+  <div class="main-panel">
+        <div class="content-wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="home-tab">
+                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <div></div>
+                  <div>
+                    <div class="btn-wrapper">
+                      <a href="<?= base_url()?>configuration/User/add" class="btn btn-otline-dark align-items-center"><i class="mdi mdi-account-plus"></i> Nouveau</a>
+                      <a href="<?= base_url()?>configuration/User/Listing" class="btn btn-otline-dark"><i class="icon-printer"></i> List</a>
+                     
+                    </div>
+                  </div>
+                </div>
+                
+             </div>
+              </div>
+            </div>s
+          <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="row">
+                  <div class="col-md-12">
+          
+                  <div class="card card-success">
               <div class="card-header">
                 <h3 class="card-title">Modificaion d'un utilisateur</h3>
               </div>
@@ -98,38 +122,28 @@
         </div> -->
         <!-- /.card-footer-->
       </div>
-      <!-- /.card -->
+           
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    </section>
-    <!-- /.content -->
+        
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+<!-- <footer class="footer">
+  <div class="d-sm-flex justify-content-center justify-content-sm-between">
+    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a
+        href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
+    <span class="float-none float-sm-end d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
   </div>
-  <!-- /.content-wrapper -->
-
+</footer> -->
+    
   <?php
- include VIEWPATH.'includes/new_copy_footer.php';  
-  ?>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-<?php
   include VIEWPATH.'includes/new_script.php';
   ?>
-  <script>
-  $(function () {
-   
-    //Date picker
-    $('#DEBUT_EXERCICE').datetimepicker({
-        format: 'L'
-        // daysOfWeekDisabled: [0, 6]
-    });    
-    $('#FIN_EXERCICE').datetimepicker({
-        format: 'L'
-    });    
-
-  })
- 
-
-
-</script>
 </body>
+
 </html>
